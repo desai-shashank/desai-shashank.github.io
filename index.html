@@ -8,40 +8,68 @@
 
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind: enable class-based dark mode
+    tailwind.config = { darkMode: 'class' };
+  </script>
 
-  <!-- Basic styling tweaks -->
   <style>
     html { scroll-behavior: smooth; }
     .container { max-width: 1100px; }
-    .pill { @apply inline-block bg-gray-100 text-gray-800 border border-gray-200 rounded-full px-3 py-1 mr-2 mb-2 text-sm; }
-    .card { @apply bg-white rounded-2xl shadow border border-gray-100; }
-    .btn  { @apply inline-block rounded-full font-semibold px-5 py-3; }
-    .btn-primary { @apply bg-blue-600 text-white hover:bg-blue-700; }
-    .btn-ghost   { @apply border border-white text-white hover:bg-white hover:text-blue-700; }
-    .btn-outline { @apply border border-gray-300 text-gray-800 hover:bg-gray-50; }
+    .pill { display:inline-block; background:rgba(0,0,0,.04); color:#374151; border:1px solid rgba(0,0,0,.08); border-radius:999px; padding:.25rem .6rem; margin:.25rem .35rem .25rem 0; font-size:.85rem }
+    .card { border-radius:1rem; border:1px solid rgba(0,0,0,.08) }
+    .btn  { display:inline-block; border-radius:999px; font-weight:600; padding:.75rem 1.2rem }
+    .btn-primary { background:#2563eb; color:#fff }
+    .btn-primary:hover { background:#1e40af }
+    .btn-ghost { border:1px solid #fff; color:#fff }
+    .btn-ghost:hover { background:#fff; color:#1e3a8a }
+    .btn-outline { border:1px solid #d1d5db; color:#111827 }
+    .btn-outline:hover { background:#f3f4f6 }
+    /* Dark mode tweaks */
+    .dark .pill { background:rgba(255,255,255,.06); color:#e5e7eb; border:1px solid rgba(255,255,255,.12) }
+    .dark .card { border-color:rgba(255,255,255,.12) }
+    .dark .btn-outline { border-color:#374151; color:#e5e7eb }
+    .dark .btn-outline:hover { background:#1f2937 }
   </style>
+
+  <script>
+    // --- Theme bootstrap: apply saved theme before paint ---
+    (function () {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
-<body class="bg-gray-50 text-gray-900">
+
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
   <!-- Header -->
-  <header class="bg-white shadow-sm sticky top-0 z-30">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+  <header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur sticky top-0 z-30 border-b border-gray-200 dark:border-gray-800">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#" class="text-lg font-bold">Shashank Kardambhai Desai</a>
+
       <nav class="hidden sm:flex gap-6">
-        <a href="#about" class="hover:text-blue-600">About</a>
-        <a href="#skills" class="hover:text-blue-600">Skills</a>
-        <a href="#projects" class="hover:text-blue-600">Projects</a>
-        <a href="#experience" class="hover:text-blue-600">Experience</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
+        <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400">About</a>
+        <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400">Skills</a>
+        <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400">Projects</a>
+        <a href="#experience" class="hover:text-blue-600 dark:hover:text-blue-400">Experience</a>
+        <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
       </nav>
-      <button id="mobileToggle" class="sm:hidden p-2 rounded hover:bg-gray-100" aria-label="Toggle menu">☰</button>
+
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle dark mode">🌙</button>
+        <button id="mobileToggle" class="sm:hidden p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle menu">☰</button>
+      </div>
     </div>
-    <div id="mobileMenu" class="sm:hidden hidden border-t bg-white">
+    <div id="mobileMenu" class="sm:hidden hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
       <nav class="container mx-auto px-4 py-3 flex flex-col gap-3">
-        <a href="#about" class="hover:text-blue-600">About</a>
-        <a href="#skills" class="hover:text-blue-600">Skills</a>
-        <a href="#projects" class="hover:text-blue-600">Projects</a>
-        <a href="#experience" class="hover:text-blue-600">Experience</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
+        <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400">About</a>
+        <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400">Skills</a>
+        <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400">Projects</a>
+        <a href="#experience" class="hover:text-blue-600 dark:hover:text-blue-400">Experience</a>
+        <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
       </nav>
     </div>
   </header>
@@ -53,7 +81,7 @@
       <p class="mt-4 text-blue-100">Turning complex problems into clean, actionable solutions.</p>
       <div class="mt-8 flex flex-wrap gap-4 justify-center">
         <a href="#projects" class="btn btn-ghost">View Projects</a>
-        <!-- Space in filenames must be URL-encoded as %20 -->
+        <!-- Space in filename is URL-encoded -->
         <a href="Shashank%20Resume%20CA.pdf" target="_blank" class="btn btn-primary">Download Resume</a>
       </div>
     </div>
@@ -62,11 +90,12 @@
   <!-- About -->
   <section id="about" class="container mx-auto px-4 py-14">
     <div class="grid md:grid-cols-2 gap-8 items-center">
-      <img src="IMG_9317x.jpg" alt="Shashank Desai profile photo" class="rounded-2xl shadow object-cover w-full h-[320px] md:h-[360px]">
-      <div class="card p-6">
+      <img src="IMG_9317x.jpg" alt="Shashank Desai profile photo"
+           class="rounded-2xl shadow object-cover w-full h-[320px] md:h-[360px] border border-gray-200 dark:border-gray-800">
+      <div class="card p-6 bg-white dark:bg-gray-800">
         <h2 class="text-2xl font-bold mb-3">About Me</h2>
-        <p id="aboutText" class="text-gray-700"></p>
-        <div class="mt-5 flex gap-3">
+        <div id="aboutText" class="text-gray-700 dark:text-gray-200"></div>
+        <div class="mt-5 flex flex-wrap gap-3">
           <a href="mailto:desaishashank7@gmail.com" class="btn btn-outline">✉️ Email</a>
           <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" class="btn btn-outline">🔗 LinkedIn</a>
           <a href="https://github.com/desai-shashank" target="_blank" class="btn btn-outline">🐙 GitHub</a>
@@ -76,21 +105,22 @@
   </section>
 
   <!-- Skills -->
-  <section id="skills" class="bg-gray-100">
+  <section id="skills" class="bg-gray-100 dark:bg-gray-950">
     <div class="container mx-auto px-4 py-14">
       <h2 class="text-2xl font-bold text-center mb-8">Skills</h2>
       <div class="grid md:grid-cols-3 gap-6" id="skillsGrid"></div>
     </div>
   </section>
 
-  <!-- Projects -->
+  <!-- Projects (from projects.json) -->
   <section id="projects" class="container mx-auto px-4 py-14">
     <h2 class="text-2xl font-bold text-center mb-8">Projects</h2>
     <div id="projectsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <p id="projectsError" class="text-center text-sm text-red-500 mt-4 hidden">Couldn’t load projects.json. Showing nothing or fallback.</p>
   </section>
 
   <!-- Experience -->
-  <section id="experience" class="bg-gray-100">
+  <section id="experience" class="bg-gray-100 dark:bg-gray-950">
     <div class="container mx-auto px-4 py-14">
       <h2 class="text-2xl font-bold text-center mb-8">Experience</h2>
       <div id="experienceList" class="grid gap-6"></div>
@@ -99,12 +129,12 @@
 
   <!-- Contact -->
   <section id="contact" class="container mx-auto px-4 py-14">
-    <div class="card p-6 text-center">
+    <div class="card p-6 bg-white dark:bg-gray-800 text-center">
       <h2 class="text-2xl font-bold mb-3">Get in Touch</h2>
-      <p class="text-gray-700">I’m open to internships, co-ops, and project collaborations.</p>
+      <p class="text-gray-700 dark:text-gray-200">I’m open to internships, co-ops, and project collaborations.</p>
       <div class="mt-4 space-y-1">
-        <p>Email: <a class="text-blue-600 hover:underline" href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
-        <p>LinkedIn: <a class="text-blue-600 hover:underline" href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank">linkedin.com/in/shashank-kardambhai-desai</a></p>
+        <p>Email: <a class="text-blue-600 dark:text-blue-400 hover:underline" href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
+        <p>LinkedIn: <a class="text-blue-600 dark:text-blue-400 hover:underline" href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank">linkedin.com/in/shashank-kardambhai-desai</a></p>
         <p>Phone: +1 (289) 783-0756</p>
       </div>
     </div>
@@ -117,22 +147,33 @@
     </div>
   </footer>
 
-  <!-- Dynamic content (edit below only) -->
+  <!-- Dynamic content + Dark mode logic -->
   <script>
-    // Simple mobile nav toggle
+    // Mobile menu
     document.getElementById('mobileToggle').addEventListener('click', () => {
-      const m = document.getElementById('mobileMenu');
-      m.classList.toggle('hidden');
+      document.getElementById('mobileMenu').classList.toggle('hidden');
     });
+
+    // Dark mode toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const html = document.documentElement;
+      const nowDark = !html.classList.contains('dark');
+      html.classList.toggle('dark', nowDark);
+      localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+      document.getElementById('themeToggle').textContent = nowDark ? '☀️' : '🌙';
+    });
+    // Set correct icon at load
+    document.getElementById('themeToggle').textContent =
+      document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
 
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ---- Content data you can edit easily ----
+    // ---- Content you can edit (About, Skills, Experience) ----
     const about = [
-      "Computer Science graduate (Parul University) and MDA student (University of Niagara Falls).",
+      "Computer Science graduate (Parul University) and Master of Data Analytics student (University of Niagara Falls).",
       "Hands-on with Python, SQL, Tableau, Power BI, and full-stack web; interests in AI/ML and cybersecurity.",
-      "I love converting messy, real-world data into crisp dashboards and production-ready tools."
+      "I convert messy, real-world data into crisp dashboards and production-ready tools."
     ];
 
     const skills = [
@@ -150,37 +191,6 @@
       }
     ];
 
-    const projects = [
-      {
-        name: "BRFSS Health Insights (Tableau)",
-        desc: "Geospatial health patterns, household size analysis, and BMI distribution with interactive filters.",
-        tech: "Tableau, Public Health Data",
-        linkText: "View (Story or PDF)",
-        href: "#" // add Tableau Public or Drive link
-      },
-      {
-        name: "Gym Training Model (ML)",
-        desc: "Recommends customized training plans from user inputs and constraints.",
-        tech: "Python, pandas, scikit-learn",
-        linkText: "GitHub / Report",
-        href: "#" // add link
-      },
-      {
-        name: "Affiliate Marketing Platform",
-        desc: "Web app to manage and track affiliate campaigns with dashboards and SEO.",
-        tech: "PHP, MySQL, HTML/CSS/JS",
-        linkText: "Demo / Repo",
-        href: "#" // add link
-      },
-      {
-        name: "Nursery E-commerce",
-        desc: "SEO-optimized storefront with catalog, cart, and checkout.",
-        tech: "HTML, CSS, JS, PHP, MySQL",
-        linkText: "Live / Repo",
-        href: "#" // add link
-      }
-    ];
-
     const experience = [
       {
         role: "Intern — Software Development",
@@ -194,45 +204,59 @@
       }
     ];
 
-    // ---- Renderers ----
-    document.getElementById('aboutText').innerHTML = about.map(p => `<p class="mb-3">${p}</p>`).join("");
+    // ---- Renderers for About / Skills / Experience ----
+    document.getElementById('aboutText').innerHTML =
+      about.map(p => `<p class="mb-3">${p}</p>`).join("");
 
     const skillsGrid = document.getElementById('skillsGrid');
     skills.forEach(group => {
       skillsGrid.insertAdjacentHTML("beforeend", `
-        <div class="card p-6">
+        <div class="card p-6 bg-white dark:bg-gray-800">
           <h3 class="font-bold mb-2">${group.title}</h3>
           <div>${group.items.map(s => `<span class="pill">${s}</span>`).join("")}</div>
         </div>
       `);
     });
 
-    const projectsGrid = document.getElementById('projectsGrid');
-    projects.forEach(p => {
-      projectsGrid.insertAdjacentHTML("beforeend", `
-        <article class="card p-6 flex flex-col">
-          <h3 class="font-bold text-lg">${p.name}</h3>
-          <p class="text-gray-700 mt-2">${p.desc}</p>
-          <p class="text-gray-500 text-sm mt-2">${p.tech}</p>
-          <div class="mt-4">
-            <a class="btn btn-outline" target="_blank" href="${p.href}">${p.linkText}</a>
-          </div>
-        </article>
-      `);
-    });
-
     const experienceList = document.getElementById('experienceList');
     experience.forEach(e => {
       experienceList.insertAdjacentHTML("beforeend", `
-        <div class="card p-6">
+        <div class="card p-6 bg-white dark:bg-gray-800">
           <h3 class="font-bold">${e.role}</h3>
-          <p class="text-gray-600">${e.org} | ${e.period}</p>
-          <ul class="list-disc list-inside mt-2 text-gray-700">
+          <p class="text-gray-600 dark:text-gray-300">${e.org} | ${e.period}</p>
+          <ul class="list-disc list-inside mt-2 text-gray-700 dark:text-gray-200">
             ${e.bullets.map(b => `<li>${b}</li>`).join("")}
           </ul>
         </div>
       `);
     });
+
+    // ---- Projects from projects.json (external file) ----
+    async function loadProjects() {
+      try {
+        const res = await fetch('projects.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const projects = await res.json();
+
+        const grid = document.getElementById('projectsGrid');
+        projects.forEach(p => {
+          grid.insertAdjacentHTML('beforeend', `
+            <article class="card p-6 bg-white dark:bg-gray-800 flex flex-col">
+              <h3 class="font-bold text-lg">${p.name}</h3>
+              <p class="text-gray-700 dark:text-gray-200 mt-2">${p.desc}</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">${p.tech}</p>
+              <div class="mt-4">
+                ${p.link ? `<a class="btn btn-outline" target="_blank" href="${p.link}">${p.linkText || 'Open'}</a>` : ''}
+              </div>
+            </article>
+          `);
+        });
+      } catch (e) {
+        document.getElementById('projectsError').classList.remove('hidden');
+        console.error('Failed to load projects.json', e);
+      }
+    }
+    loadProjects();
   </script>
 </body>
 </html>
