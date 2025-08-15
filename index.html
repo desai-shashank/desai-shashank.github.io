@@ -1,47 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Meta -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shashank Desai — Data & Software</title>
-  <meta name="description" content="Shashank Desai — Data analytics, AI/ML, security, and full-stack web. Selected work, writing, speaking, and timeline." />
+  <meta name="description" content="Shashank Desai — Selected work, writing, speaking, and timeline. Data analytics, AI/ML, security, and full-stack web." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%220.9em%22 font-size=%2290%22>⚡</text></svg>">
 
+  <!-- Typography (system stack to avoid external deps) -->
   <style>
     :root{
-      --bg:#ffffff; --text:#0b0b0d; --muted:#676c76; --card:#ffffff; --line:#e6e7eb;
-      --accent:#0f172a; --accentText:#ffffff;
+      --bg:#ffffff; --text:#0c0c0f; --muted:#6b7280; --line:#e6e7eb; --card:#ffffff;
+      --ink:#111827; --accent:#0f172a; --ink-ghost:#f9fafb;
+      --link:#111827; --link-underline:rgba(0,0,0,.35);
     }
     .dark{
-      --bg:#0b0b0d; --text:#f3f4f6; --muted:#a8acb3; --card:#0f1115; --line:#1c1f26;
-      --accent:#f3f4f6; --accentText:#0b0b0d;
+      --bg:#0b0b0d; --text:#f3f4f6; --muted:#9ca3af; --line:#1f2430; --card:#0f1115;
+      --ink:#e5e7eb; --accent:#f9fafb; --ink-ghost:#0b0b0d;
+      --link:#e5e7eb; --link-underline:rgba(255,255,255,.35);
     }
     *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial}
+    body{margin:0;background:var(--bg);color:var(--text);
+      font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial}
     .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:saturate(160%) blur(8px);
-      border-bottom:1px solid var(--line)}
+
+    /* Header / Nav */
+    header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%, transparent);
+      backdrop-filter:saturate(160%) blur(8px); border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .nav a{color:var(--text);text-decoration:none;margin-left:18px;font-size:14px}
-    .nav a:hover{opacity:.75}
-    .btn{display:inline-block;padding:10px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--text)}
-    .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accentText)}
-    .grid{display:grid;gap:18px}
-    .hero{padding:48px 0 20px}
-    .hero-grid{grid-template-columns:160px 1fr;align-items:center}
+    .brand{font-weight:700}
+    .nav a{color:var(--text);text-decoration:none;font-size:14px}
+    .nav .links{display:flex;gap:18px;align-items:center}
+    .link{color:var(--link);text-decoration:none;border-bottom:1px dashed var(--link-underline)}
+    .link:hover{opacity:.8}
+
+    /* Buttons */
+    .btn{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid var(--line);
+      text-decoration:none;color:var(--ink);background:transparent}
+    .btn.ghost{color:var(--ink-ghost);background:var(--ink);border-color:var(--ink); }
+    .btn:hover{background:color-mix(in srgb,var(--line) 60%, transparent)}
+    .btn.ghost:hover{opacity:.92}
+
+    /* Hero */
+    .hero{padding:48px 0 18px}
+    .hero-grid{display:grid;gap:18px;grid-template-columns:170px 1fr;align-items:center}
     @media (max-width:720px){.hero-grid{grid-template-columns:1fr}}
-    .pfp{width:160px;height:160px;border-radius:18px;object-fit:cover;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-    .title{font-weight:800;letter-spacing:-.015em;margin:0 0 6px;font-size:32px}
+    .pfp{width:160px;height:160px;border-radius:18px;object-fit:cover;border:1px solid var(--line);
+      box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    h1{font-size:32px;line-height:1.25;margin:0 0 6px;font-weight:800;letter-spacing:-.015em}
     .muted{color:var(--muted)}
+
+    /* Sections */
     .section{padding:28px 0}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:13px}
-    .list{display:grid;gap:12px}
-    .item{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card);text-decoration:none;color:inherit}
+    .section h2{font-size:18px;margin:0}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
+
+    /* Cards / Lists */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+    .grid{display:grid;gap:12px}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+    .item{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);
+      border-radius:14px;padding:14px;background:var(--card)}
     .item:hover{box-shadow:0 6px 18px rgba(0,0,0,.06)}
-    .item h3{margin:0 0 4px;font-size:16px}
-    .item small{color:var(--muted)}
+    .item h3{margin:0 0 6px;font-size:16px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:6px}
+
+    /* Timeline */
+    .timeline{display:grid;gap:10px}
+    .trow{display:grid;grid-template-columns:100px 1fr;gap:14px}
+    @media (max-width:560px){.trow{grid-template-columns:1fr}}
+    .when{font-size:13px;color:var(--muted)}
+    .what{font-weight:600}
+
+    /* Footer */
     footer{border-top:1px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);font-size:14px}
 
     /* Reveal on scroll */
@@ -54,44 +88,46 @@
     #themeBtn:hover{background:color-mix(in srgb,var(--line) 60%, transparent)}
   </style>
 
+  <!-- Apply saved theme before paint -->
   <script>
-    // Apply saved theme before paint
     (function(){
       const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
     })();
   </script>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="wrap nav">
-      <strong>Shashank Desai</strong>
-      <nav>
+      <span class="brand">Shashank Desai</span>
+      <div class="links">
         <a href="#work">Work</a>
         <a href="#writing">Writing</a>
         <a href="#speaking">Speaking</a>
+        <a href="#projects">Projects</a>
         <a href="#timeline">Timeline</a>
         <a href="#contact">Contact</a>
+        <a class="btn" href="Shashank%20Resume%20CA.pdf" target="_blank">Resume</a>
         <button id="themeBtn" aria-label="Toggle theme">🌙</button>
-      </nav>
+      </div>
     </div>
   </header>
 
   <main class="wrap">
     <!-- Hero -->
     <section class="hero">
-      <div class="grid hero-grid">
+      <div class="hero-grid">
         <img src="IMG_9317x.jpg" alt="Shashank profile" class="pfp reveal" />
         <div class="reveal">
-          <h1 class="title">I build data-driven products and crisp dashboards.</h1>
+          <h1>I build data-driven products and crisp dashboards.</h1>
           <p class="muted">Master of Data Analytics @ UNFC. I work across Python, SQL, Tableau/Power BI, and full-stack web, with growing interests in AI/ML and security. I like shipping simple, reliable tools that make decisions easier.</p>
-          <div class="row" style="margin-top:10px">
-            <a href="#work" class="btn primary">See featured work</a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <a href="#work" class="btn ghost">See featured work</a>
             <a href="mailto:desaishashank7@gmail.com" class="btn">Email</a>
             <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" class="btn">LinkedIn</a>
             <a href="https://github.com/desai-shashank" target="_blank" class="btn">GitHub</a>
-            <a href="Shashank%20Resume%20CA.pdf" target="_blank" class="btn">Resume (PDF)</a>
           </div>
         </div>
       </div>
@@ -99,59 +135,58 @@
 
     <!-- Featured Work -->
     <section id="work" class="section">
-      <div class="row" style="align-items:flex-end;justify-content:space-between">
-        <h2 style="margin:0">Featured work</h2>
-        <a href="#projects" class="muted">All projects →</a>
+      <div class="section-head">
+        <h2>Featured work</h2>
+        <a href="#projects" class="link">All projects</a>
       </div>
-      <div id="featuredGrid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:12px"></div>
+      <div id="featuredGrid" class="grid cols-2"></div>
     </section>
 
     <!-- Writing -->
     <section id="writing" class="section">
-      <div class="row" style="align-items:flex-end;justify-content:space-between">
-        <h2 style="margin:0">Writing</h2>
-        <a href="#notes" class="muted">All notes →</a>
+      <div class="section-head">
+        <h2>Writing</h2>
+        <a href="#notes" class="link">All notes</a>
       </div>
-      <div id="writingList" class="list" style="margin-top:12px"></div>
+      <div id="writingList" class="grid"></div>
     </section>
 
     <!-- Speaking -->
     <section id="speaking" class="section">
-      <h2 style="margin:0 0 12px">Speaking</h2>
-      <div id="talksList" class="list"></div>
+      <h2>Speaking</h2>
+      <div id="talksList" class="grid" style="margin-top:12px"></div>
     </section>
 
-    <!-- All Projects -->
+    <!-- Projects -->
     <section id="projects" class="section">
-      <h2 style="margin:0 0 12px">All projects</h2>
-      <div id="projectsGrid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+      <h2>All projects</h2>
+      <div id="projectsGrid" class="grid cols-3" style="margin-top:12px"></div>
     </section>
 
     <!-- Timeline -->
     <section id="timeline" class="section">
-      <h2 style="margin:0 0 12px">Timeline</h2>
-      <div id="timelineList" class="list"></div>
+      <h2>Timeline</h2>
+      <div id="timelineList" class="timeline" style="margin-top:12px"></div>
     </section>
 
     <!-- Contact -->
     <section id="contact" class="section">
       <div class="card reveal">
         <h2 style="margin:0 0 6px">Contact</h2>
-        <p class="muted" style="margin:0 0 6px">Open to internships, co-ops, and collaborations.</p>
+        <p class="muted" style="margin:0 0 8px">Open to internships, co-ops, and collaborations.</p>
         <div style="font-size:15px">
-          <p>Email: <a href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
+          <p>Email: <a class="link" href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
           <p>Phone: +1 (289) 783-0756</p>
+          <p>Resume: <a class="link" href="Shashank%20Resume%20CA.pdf" target="_blank">Shashank Resume (PDF)</a></p>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span>© <span id="year"></span> Shashank Desai</span>
-        <span class="muted">Built for GitHub Pages</span>
-      </div>
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+      <span>© <span id="year"></span> Shashank Desai</span>
+      <span class="muted">Built for GitHub Pages</span>
     </div>
   </footer>
 
@@ -175,25 +210,30 @@
     }, {threshold:0.18});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // ------- Editable content (no external files needed) -------
+    // --------- Editable content (fast updates, no external files) ---------
     const featured = [
-      { title:"BRFSS Health Insights", blurb:"Geospatial health patterns, household size analysis, and BMI distribution with interactive filters.", meta:"Tableau • Public Health", link:"#"},
-      { title:"Gym Training Model (ML)", blurb:"Personalized training suggestions from user inputs and constraints.", meta:"Python • pandas • scikit-learn", link:"#"}
+      { title:"BRFSS Health Insights", meta:"Tableau • Public Health", blurb:"Geospatial patterns, household size analysis, and BMI distribution with interactive filters.", link:"#"},
+      { title:"Gym Training Model (ML)", meta:"Python • pandas • scikit-learn", blurb:"Personalized training suggestions from user inputs and constraints.", link:"#"}
     ];
+
     const projects = [
       ...featured,
-      { title:"Affiliate Marketing Platform", blurb:"Manage and track affiliate campaigns with admin dashboards and SEO.", meta:"PHP • MySQL • HTML/CSS/JS", link:"#"},
-      { title:"Nursery E-commerce", blurb:"SEO-optimized storefront with catalog, cart, and checkout.", meta:"HTML • CSS • JS • PHP • MySQL", link:"#"}
+      { title:"Affiliate Marketing Platform", meta:"PHP • MySQL • HTML/CSS/JS", blurb:"Admin dashboards, tracking, and SEO features.", link:"#"},
+      { title:"Nursery E-commerce", meta:"HTML • CSS • JS • PHP • MySQL", blurb:"SEO-optimized storefront with catalog, cart, checkout.", link:"#"},
+      { title:"Supply Chain Facility Location (MILP)", meta:"Python • OR-Tools", blurb:"Multi-warehouse placement & capacity planning with sensitivity analysis.", link:"#"}
     ];
+
     const posts = [
       { title:"Designing KPIs that don’t lie", date:"2025-06-20", link:"#"},
       { title:"Feature engineering notes for tabular data", date:"2025-05-12", link:"#"},
       { title:"Dashboards: when less is more", date:"2025-04-02", link:"#"}
     ];
+
     const talks = [
       { title:"Storytelling with Health Data", where:"Campus Data Club", date:"2025-07-08", link:"#"},
       { title:"From CSV to Insights", where:"Guest Lab Session", date:"2025-03-11", link:"#"}
     ];
+
     const timeline = [
       { when:"2025", what:"Master of Data Analytics — University of Niagara Falls (in progress)"},
       { when:"2024", what:"Intern, Software Development — InfoServOps (Vadodara)"},
@@ -201,22 +241,22 @@
       { when:"2018-2021", what:"Diploma in Computer Engineering — Parul University"}
     ];
 
-    // Render helpers
-    const card = (t)=>`
-      <a href="${t.link||'#'}" class="item reveal" target="${t.link ? '_blank':''}">
-        <h3>${t.title}</h3>
-        <div class="muted" style="margin:2px 0 8px">${t.meta || ''}</div>
-        <div>${t.blurb}</div>
-      </a>`;
+    // --------- Renderers ---------
+    function cardHTML(o){ return `
+      <a href="${o.link||'#'}" class="item reveal" target="${o.link ? '_blank':''}">
+        <h3>${o.title}</h3>
+        ${o.meta ? `<div class="meta">${o.meta}</div>` : ``}
+        <div>${o.blurb||''}</div>
+      </a>`; }
 
-    featured.forEach(x=>document.getElementById('featuredGrid').insertAdjacentHTML('beforeend', card(x)));
-    projects.forEach(x=>document.getElementById('projectsGrid').insertAdjacentHTML('beforeend', card(x)));
+    featured.forEach(x=>document.getElementById('featuredGrid').insertAdjacentHTML('beforeend', cardHTML(x)));
+    projects.forEach(x=>document.getElementById('projectsGrid').insertAdjacentHTML('beforeend', cardHTML(x)));
 
     posts.forEach(p=>{
       document.getElementById('writingList').insertAdjacentHTML('beforeend', `
         <a href="${p.link}" class="item reveal" target="${p.link ? '_blank':''}">
           <div style="display:flex;justify-content:space-between;gap:10px">
-            <strong>${p.title}</strong><small class="muted">${p.date}</small>
+            <strong>${p.title}</strong><small class="meta">${p.date}</small>
           </div>
         </a>`);
     });
@@ -225,16 +265,16 @@
       document.getElementById('talksList').insertAdjacentHTML('beforeend', `
         <a href="${t.link}" class="item reveal" target="${t.link ? '_blank':''}">
           <div style="display:flex;justify-content:space-between;gap:10px">
-            <strong>${t.title}</strong><small class="muted">${t.where} • ${t.date}</small>
+            <strong>${t.title}</strong><small class="meta">${t.where} • ${t.date}</small>
           </div>
         </a>`);
     });
 
     timeline.forEach(row=>{
       document.getElementById('timelineList').insertAdjacentHTML('beforeend', `
-        <div class="item reveal">
-          <small class="muted">${row.when}</small>
-          <div style="margin-top:4px">${row.what}</div>
+        <div class="trow reveal">
+          <div class="when">${row.when}</div>
+          <div class="what">${row.what}</div>
         </div>`);
     });
   </script>
