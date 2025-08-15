@@ -1,249 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Meta -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shashank Desai — Data & Software</title>
-  <meta name="description" content="Shashank Desai — Data analytics, AI/ML, cybersecurity, and full-stack web. Selected work, writing, speaking, and notes." />
+  <meta name="description" content="Shashank Desai — Data analytics, AI/ML, security, and full-stack web. Selected work, writing, speaking, and timeline." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%220.9em%22 font-size=%2290%22>⚡</text></svg>">
-  <meta property="og:title" content="Shashank Desai — Data & Software" />
-  <meta property="og:description" content="Selected work, writing, speaking, and notes." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="IMG_9317x.jpg" />
 
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class', theme: { fontFamily: { sans: ['Inter','system-ui','-apple-system','Segoe UI','Roboto','Ubuntu','Cantarell','Helvetica','Arial'] } } };</script>
-
-  <!-- Base styles -->
   <style>
-    html { scroll-behavior: smooth; }
-    .container { max-width: 1000px; }
-    .prose { line-height: 1.7 }
-    .card { border: 1px solid rgba(0,0,0,.08); border-radius: 16px }
-    .dark .card { border-color: rgba(255,255,255,.14) }
-    .muted { color: #6b7280 } .dark .muted { color: #9ca3af }
-    .link { text-decoration: none; border-bottom: 1px dashed rgba(0,0,0,.25) }
-    .dark .link { border-color: rgba(255,255,255,.35) }
+    :root{
+      --bg:#ffffff; --text:#0b0b0d; --muted:#676c76; --card:#ffffff; --line:#e6e7eb;
+      --accent:#0f172a; --accentText:#ffffff;
+    }
+    .dark{
+      --bg:#0b0b0d; --text:#f3f4f6; --muted:#a8acb3; --card:#0f1115; --line:#1c1f26;
+      --accent:#f3f4f6; --accentText:#0b0b0d;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial}
+    .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:saturate(160%) blur(8px);
+      border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .nav a{color:var(--text);text-decoration:none;margin-left:18px;font-size:14px}
+    .nav a:hover{opacity:.75}
+    .btn{display:inline-block;padding:10px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--text)}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accentText)}
+    .grid{display:grid;gap:18px}
+    .hero{padding:48px 0 20px}
+    .hero-grid{grid-template-columns:160px 1fr;align-items:center}
+    @media (max-width:720px){.hero-grid{grid-template-columns:1fr}}
+    .pfp{width:160px;height:160px;border-radius:18px;object-fit:cover;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    .title{font-weight:800;letter-spacing:-.015em;margin:0 0 6px;font-size:32px}
+    .muted{color:var(--muted)}
+    .section{padding:28px 0}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:13px}
+    .list{display:grid;gap:12px}
+    .item{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card);text-decoration:none;color:inherit}
+    .item:hover{box-shadow:0 6px 18px rgba(0,0,0,.06)}
+    .item h3{margin:0 0 4px;font-size:16px}
+    .item small{color:var(--muted)}
+    footer{border-top:1px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);font-size:14px}
+
     /* Reveal on scroll */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; will-change: opacity,transform }
-    .reveal.show { opacity: 1; transform: none }
-    @media (prefers-reduced-motion: reduce){ .reveal { opacity:1 !important; transform:none !important; transition:none !important } }
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease;will-change:opacity,transform}
+    .reveal.show{opacity:1;transform:none}
+    @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+    /* Theme toggle */
+    #themeBtn{border:none;background:transparent;font-size:18px;padding:6px 8px;border-radius:10px}
+    #themeBtn:hover{background:color-mix(in srgb,var(--line) 60%, transparent)}
   </style>
 
-  <!-- Theme bootstrap: apply saved theme before paint -->
   <script>
-    (function () {
+    // Apply saved theme before paint
+    (function(){
       const saved = localStorage.getItem('theme');
-      const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
     })();
   </script>
 </head>
-
-<body class="bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-  <!-- Header / Nav -->
-  <header class="sticky top-0 z-30 bg-white/80 dark:bg-zinc-950/80 backdrop-blur border-b border-zinc-200 dark:border-zinc-800">
-    <div class="container mx-auto px-5 py-3 flex items-center justify-between">
-      <a href="#" class="font-semibold">Shashank Desai</a>
-      <nav class="hidden sm:flex gap-6 text-sm">
-        <a class="hover:opacity-70" href="#work">Work</a>
-        <a class="hover:opacity-70" href="#writing">Writing</a>
-        <a class="hover:opacity-70" href="#speaking">Speaking</a>
-        <a class="hover:opacity-70" href="#timeline">Timeline</a>
-        <a class="hover:opacity-70" href="#contact">Contact</a>
+<body>
+  <header>
+    <div class="wrap nav">
+      <strong>Shashank Desai</strong>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#writing">Writing</a>
+        <a href="#speaking">Speaking</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#contact">Contact</a>
+        <button id="themeBtn" aria-label="Toggle theme">🌙</button>
       </nav>
-      <div class="flex items-center gap-2">
-        <a href="Shashank%20Resume%20CA.pdf" target="_blank" class="hidden sm:inline text-sm px-3 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900">Resume</a>
-        <button id="themeToggle" class="px-3 py-1.5 text-lg rounded hover:bg-zinc-100 dark:hover:bg-zinc-900" aria-label="Toggle theme">🌙</button>
-      </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="container mx-auto px-5 pt-12 pb-8 sm:pt-16">
-    <div class="grid sm:grid-cols-[180px,1fr] gap-6 items-center">
-      <img src="IMG_9317x.jpg" alt="Profile photo" class="w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] object-cover rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-md reveal">
-      <div class="reveal">
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">I build data-driven products and crisp dashboards.</h1>
-        <p class="mt-3 text-zinc-600 dark:text-zinc-400 prose">Master of Data Analytics @ UNFC. I work across Python, SQL, Tableau/Power BI, and full-stack web, with growing interests in AI/ML and security. I like shipping simple, reliable tools that make decisions easier.</p>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a href="#work" class="px-4 py-2 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:opacity-90">See featured work</a>
-          <a href="mailto:desaishashank7@gmail.com" class="px-4 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900">Email me</a>
-          <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" class="px-4 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900">LinkedIn</a>
-          <a href="https://github.com/desai-shashank" target="_blank" class="px-4 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900">GitHub</a>
+  <main class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="grid hero-grid">
+        <img src="IMG_9317x.jpg" alt="Shashank profile" class="pfp reveal" />
+        <div class="reveal">
+          <h1 class="title">I build data-driven products and crisp dashboards.</h1>
+          <p class="muted">Master of Data Analytics @ UNFC. I work across Python, SQL, Tableau/Power BI, and full-stack web, with growing interests in AI/ML and security. I like shipping simple, reliable tools that make decisions easier.</p>
+          <div class="row" style="margin-top:10px">
+            <a href="#work" class="btn primary">See featured work</a>
+            <a href="mailto:desaishashank7@gmail.com" class="btn">Email</a>
+            <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" class="btn">LinkedIn</a>
+            <a href="https://github.com/desai-shashank" target="_blank" class="btn">GitHub</a>
+            <a href="Shashank%20Resume%20CA.pdf" target="_blank" class="btn">Resume (PDF)</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Featured Work -->
-  <section id="work" class="container mx-auto px-5 py-10">
-    <div class="flex items-end justify-between">
-      <h2 class="text-xl font-semibold">Featured work</h2>
-      <a href="#projects" class="text-sm link hover:opacity-80">All projects</a>
-    </div>
-    <div id="featuredGrid" class="mt-6 grid md:grid-cols-2 gap-6"></div>
-  </section>
-
-  <!-- Writing -->
-  <section id="writing" class="container mx-auto px-5 py-10">
-    <div class="flex items-end justify-between">
-      <h2 class="text-xl font-semibold">Writing</h2>
-      <a href="#notes" class="text-sm link hover:opacity-80">All notes</a>
-    </div>
-    <div id="writingList" class="mt-4 grid gap-4"></div>
-  </section>
-
-  <!-- Speaking -->
-  <section id="speaking" class="container mx-auto px-5 py-10">
-    <h2 class="text-xl font-semibold">Speaking</h2>
-    <div id="talksList" class="mt-4 grid gap-4"></div>
-  </section>
-
-  <!-- All Projects -->
-  <section id="projects" class="container mx-auto px-5 py-10">
-    <h2 class="text-xl font-semibold">All projects</h2>
-    <div id="projectsGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-  </section>
-
-  <!-- Timeline -->
-  <section id="timeline" class="container mx-auto px-5 py-10">
-    <h2 class="text-xl font-semibold">Timeline</h2>
-    <div id="timelineList" class="mt-6 grid gap-4"></div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="container mx-auto px-5 py-12">
-    <div class="card p-6 bg-white dark:bg-zinc-900">
-      <h2 class="text-lg font-semibold">Contact</h2>
-      <p class="mt-1 muted">Open to internships, co-ops, and collaborations.</p>
-      <div class="mt-3 text-sm">
-        <p>Email: <a class="link hover:opacity-80" href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
-        <p>Phone: +1 (289) 783-0756</p>
-        <p>Resume: <a class="link hover:opacity-80" href="Shashank%20Resume%20CA.pdf" target="_blank">Shashank Resume (PDF)</a></p>
+    <!-- Featured Work -->
+    <section id="work" class="section">
+      <div class="row" style="align-items:flex-end;justify-content:space-between">
+        <h2 style="margin:0">Featured work</h2>
+        <a href="#projects" class="muted">All projects →</a>
       </div>
-    </div>
-  </section>
+      <div id="featuredGrid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:12px"></div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="border-t border-zinc-200 dark:border-zinc-800">
-    <div class="container mx-auto px-5 py-6 text-sm muted flex items-center justify-between">
-      <span>© <span id="year"></span> Shashank Desai</span>
-      <span>Built for GitHub Pages</span>
+    <!-- Writing -->
+    <section id="writing" class="section">
+      <div class="row" style="align-items:flex-end;justify-content:space-between">
+        <h2 style="margin:0">Writing</h2>
+        <a href="#notes" class="muted">All notes →</a>
+      </div>
+      <div id="writingList" class="list" style="margin-top:12px"></div>
+    </section>
+
+    <!-- Speaking -->
+    <section id="speaking" class="section">
+      <h2 style="margin:0 0 12px">Speaking</h2>
+      <div id="talksList" class="list"></div>
+    </section>
+
+    <!-- All Projects -->
+    <section id="projects" class="section">
+      <h2 style="margin:0 0 12px">All projects</h2>
+      <div id="projectsGrid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="section">
+      <h2 style="margin:0 0 12px">Timeline</h2>
+      <div id="timelineList" class="list"></div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="card reveal">
+        <h2 style="margin:0 0 6px">Contact</h2>
+        <p class="muted" style="margin:0 0 6px">Open to internships, co-ops, and collaborations.</p>
+        <div style="font-size:15px">
+          <p>Email: <a href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
+          <p>Phone: +1 (289) 783-0756</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span>© <span id="year"></span> Shashank Desai</span>
+        <span class="muted">Built for GitHub Pages</span>
+      </div>
     </div>
   </footer>
 
-  <!-- Data + Renderers -->
   <script>
     // Theme toggle
-    const themeBtn = document.getElementById('themeToggle');
-    function setThemeIcon() { themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
-    themeBtn.addEventListener('click', () => {
+    const themeBtn = document.getElementById('themeBtn');
+    function setThemeIcon(){ themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
+    themeBtn.addEventListener('click', ()=>{
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
       setThemeIcon();
     });
     setThemeIcon();
 
-    // Footer year
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Simple reveal on scroll (once)
-    const io = new IntersectionObserver((ents) => {
-      ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    // Reveal on scroll
+    const io = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+    }, {threshold:0.18});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // ---------- Editable content ----------
+    // ------- Editable content (no external files needed) -------
     const featured = [
-      {
-        title: "BRFSS Health Insights",
-        blurb: "Geospatial health patterns, household size analysis, and BMI distribution with interactive filters.",
-        meta: "Tableau • Public Health",
-        link: "#"
-      },
-      {
-        title: "Gym Training Model (ML)",
-        blurb: "Personalized training suggestions from user inputs and constraints.",
-        meta: "Python • pandas • scikit-learn",
-        link: "#"
-      }
+      { title:"BRFSS Health Insights", blurb:"Geospatial health patterns, household size analysis, and BMI distribution with interactive filters.", meta:"Tableau • Public Health", link:"#"},
+      { title:"Gym Training Model (ML)", blurb:"Personalized training suggestions from user inputs and constraints.", meta:"Python • pandas • scikit-learn", link:"#"}
     ];
-
     const projects = [
       ...featured,
-      {
-        title: "Affiliate Marketing Platform",
-        blurb: "Manage and track affiliate campaigns with admin dashboards and SEO.",
-        meta: "PHP • MySQL • HTML/CSS/JS",
-        link: "#"
-      },
-      {
-        title: "Nursery E-commerce",
-        blurb: "SEO-optimized storefront with catalog, cart, and checkout.",
-        meta: "HTML • CSS • JS • PHP • MySQL",
-        link: "#"
-      }
+      { title:"Affiliate Marketing Platform", blurb:"Manage and track affiliate campaigns with admin dashboards and SEO.", meta:"PHP • MySQL • HTML/CSS/JS", link:"#"},
+      { title:"Nursery E-commerce", blurb:"SEO-optimized storefront with catalog, cart, and checkout.", meta:"HTML • CSS • JS • PHP • MySQL", link:"#"}
     ];
-
     const posts = [
-      { title: "Designing KPIs that don’t lie", date: "2025-06-20", link: "#" },
-      { title: "Feature engineering notes for tabular data", date: "2025-05-12", link: "#" },
-      { title: "Dashboards: when less is more", date: "2025-04-02", link: "#" }
+      { title:"Designing KPIs that don’t lie", date:"2025-06-20", link:"#"},
+      { title:"Feature engineering notes for tabular data", date:"2025-05-12", link:"#"},
+      { title:"Dashboards: when less is more", date:"2025-04-02", link:"#"}
     ];
-
     const talks = [
-      { title: "Storytelling with Health Data", where: "Campus Data Club", date: "2025-07-08", link: "#" },
-      { title: "From CSV to Insights", where: "Guest Lab Session", date: "2025-03-11", link: "#" }
+      { title:"Storytelling with Health Data", where:"Campus Data Club", date:"2025-07-08", link:"#"},
+      { title:"From CSV to Insights", where:"Guest Lab Session", date:"2025-03-11", link:"#"}
     ];
-
     const timeline = [
-      { when: "2025", what: "Master of Data Analytics — University of Niagara Falls (in progress)" },
-      { when: "2024", what: "Intern, Software Development — InfoServOps (Vadodara)" },
-      { when: "2021-2024", what: "B.Tech Computer Science — Parul University" },
-      { when: "2018-2021", what: "Diploma in Computer Engineering — Parul University" }
+      { when:"2025", what:"Master of Data Analytics — University of Niagara Falls (in progress)"},
+      { when:"2024", what:"Intern, Software Development — InfoServOps (Vadodara)"},
+      { when:"2021-2024", what:"B.Tech Computer Science — Parul University"},
+      { when:"2018-2021", what:"Diploma in Computer Engineering — Parul University"}
     ];
 
-    // ---------- Renderers ----------
-    function cardHTML(item){ return `
-      <a href="${item.link || '#'}" target="${item.link ? '_blank':''}" class="card p-5 bg-white dark:bg-zinc-900 block hover:shadow transition reveal">
-        <div class="flex items-start justify-between">
-          <h3 class="font-semibold">${item.title}</h3>
-          <span class="text-xs px-2 py-1 rounded-full border border-zinc-200 dark:border-zinc-700">${item.meta || ''}</span>
-        </div>
-        <p class="mt-2 muted">${item.blurb}</p>
-      </a>`;}
+    // Render helpers
+    const card = (t)=>`
+      <a href="${t.link||'#'}" class="item reveal" target="${t.link ? '_blank':''}">
+        <h3>${t.title}</h3>
+        <div class="muted" style="margin:2px 0 8px">${t.meta || ''}</div>
+        <div>${t.blurb}</div>
+      </a>`;
 
-    featured.forEach(it => document.getElementById('featuredGrid').insertAdjacentHTML('beforeend', cardHTML(it)));
-    projects.forEach(it => document.getElementById('projectsGrid').insertAdjacentHTML('beforeend', cardHTML(it)));
+    featured.forEach(x=>document.getElementById('featuredGrid').insertAdjacentHTML('beforeend', card(x)));
+    projects.forEach(x=>document.getElementById('projectsGrid').insertAdjacentHTML('beforeend', card(x)));
 
-    posts.forEach(p => {
+    posts.forEach(p=>{
       document.getElementById('writingList').insertAdjacentHTML('beforeend', `
-        <a href="${p.link}" target="${p.link ? '_blank':''}" class="card p-4 bg-white dark:bg-zinc-900 hover:shadow transition reveal">
-          <div class="flex items-center justify-between">
-            <span class="font-medium">${p.title}</span>
-            <time class="text-sm muted">${p.date}</time>
+        <a href="${p.link}" class="item reveal" target="${p.link ? '_blank':''}">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <strong>${p.title}</strong><small class="muted">${p.date}</small>
           </div>
         </a>`);
     });
 
-    talks.forEach(t => {
+    talks.forEach(t=>{
       document.getElementById('talksList').insertAdjacentHTML('beforeend', `
-        <a href="${t.link}" target="${t.link ? '_blank':''}" class="card p-4 bg-white dark:bg-zinc-900 hover:shadow transition reveal">
-          <div class="flex items-center justify-between">
-            <span class="font-medium">${t.title}</span>
-            <span class="text-sm muted">${t.where} • ${t.date}</span>
+        <a href="${t.link}" class="item reveal" target="${t.link ? '_blank':''}">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <strong>${t.title}</strong><small class="muted">${t.where} • ${t.date}</small>
           </div>
         </a>`);
     });
 
-    timeline.forEach(row => {
+    timeline.forEach(row=>{
       document.getElementById('timelineList').insertAdjacentHTML('beforeend', `
-        <div class="card p-4 bg-white dark:bg-zinc-900 reveal">
-          <div class="text-sm muted">${row.when}</div>
-          <div class="mt-1 font-medium">${row.what}</div>
+        <div class="item reveal">
+          <small class="muted">${row.when}</small>
+          <div style="margin-top:4px">${row.what}</div>
         </div>`);
     });
   </script>
