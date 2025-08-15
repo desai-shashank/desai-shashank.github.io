@@ -9,13 +9,14 @@
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Tailwind: enable class-based dark mode
     tailwind.config = { darkMode: 'class' };
   </script>
 
   <style>
     html { scroll-behavior: smooth; }
     .container { max-width: 1100px; }
+
+    /* Pills / cards / buttons */
     .pill { display:inline-block; background:rgba(0,0,0,.04); color:#374151; border:1px solid rgba(0,0,0,.08); border-radius:999px; padding:.25rem .6rem; margin:.25rem .35rem .25rem 0; font-size:.85rem }
     .card { border-radius:1rem; border:1px solid rgba(0,0,0,.08) }
     .btn  { display:inline-block; border-radius:999px; font-weight:600; padding:.75rem 1.2rem }
@@ -25,15 +26,60 @@
     .btn-ghost:hover { background:#fff; color:#1e3a8a }
     .btn-outline { border:1px solid #d1d5db; color:#111827 }
     .btn-outline:hover { background:#f3f4f6 }
-    /* Dark mode tweaks */
     .dark .pill { background:rgba(255,255,255,.06); color:#e5e7eb; border:1px solid rgba(255,255,255,.12) }
     .dark .card { border-color:rgba(255,255,255,.12) }
     .dark .btn-outline { border-color:#374151; color:#e5e7eb }
     .dark .btn-outline:hover { background:#1f2937 }
+
+    /* Profile image sizing (smaller & consistent) */
+    .profile-img {
+      width: 240px;          /* clamp size on desktop */
+      height: 240px;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 1rem;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    @media (max-width: 768px) {
+      .profile-img {
+        width: 180px;
+        height: 180px;
+      }
+    }
+    .dark .profile-img { border-color: rgba(255,255,255,.12) }
+
+    /* Reveal-on-scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      transition: opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    /* variants */
+    .reveal-x   { transform: translateX(24px); }
+    .reveal-x.is-visible { transform: translateX(0); }
+    .reveal-pop { transform: scale(.96); }
+    .reveal-pop.is-visible { transform: scale(1); }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-x,
+      .reveal-pop {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 
   <script>
-    // --- Theme bootstrap: apply saved theme before paint ---
+    // --- Theme bootstrap before paint ---
     (function () {
       const saved = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -77,11 +123,10 @@
   <!-- Hero -->
   <section class="bg-blue-600 text-white">
     <div class="container mx-auto px-4 py-16 sm:py-20 text-center">
-      <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">Data Analytics • AI/ML • Cybersecurity • Full-Stack Web</h1>
-      <p class="mt-4 text-blue-100">Turning complex problems into clean, actionable solutions.</p>
-      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+      <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight reveal-pop">Data Analytics • AI/ML • Cybersecurity • Full-Stack Web</h1>
+      <p class="mt-4 text-blue-100 reveal">Turning complex problems into clean, actionable solutions.</p>
+      <div class="mt-8 flex flex-wrap gap-4 justify-center reveal">
         <a href="#projects" class="btn btn-ghost">View Projects</a>
-        <!-- Space in filename is URL-encoded -->
         <a href="Shashank%20Resume%20CA.pdf" target="_blank" class="btn btn-primary">Download Resume</a>
       </div>
     </div>
@@ -90,9 +135,17 @@
   <!-- About -->
   <section id="about" class="container mx-auto px-4 py-14">
     <div class="grid md:grid-cols-2 gap-8 items-center">
-      <img src="IMG_9317x.jpg" alt="Shashank Desai profile photo"
-           class="rounded-2xl shadow object-cover w-full h-[320px] md:h-[360px] border border-gray-200 dark:border-gray-800">
-      <div class="card p-6 bg-white dark:bg-gray-800">
+      <div class="flex justify-center reveal-pop">
+        <img
+          src="IMG_9317x.jpg"
+          alt="Shashank Desai profile photo"
+          class="profile-img"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+        />
+      </div>
+      <div class="card p-6 bg-white dark:bg-gray-800 reveal-x">
         <h2 class="text-2xl font-bold mb-3">About Me</h2>
         <div id="aboutText" class="text-gray-700 dark:text-gray-200"></div>
         <div class="mt-5 flex flex-wrap gap-3">
@@ -107,14 +160,14 @@
   <!-- Skills -->
   <section id="skills" class="bg-gray-100 dark:bg-gray-950">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl font-bold text-center mb-8">Skills</h2>
+      <h2 class="text-2xl font-bold text-center mb-8 reveal">Skills</h2>
       <div class="grid md:grid-cols-3 gap-6" id="skillsGrid"></div>
     </div>
   </section>
 
   <!-- Projects (from projects.json) -->
   <section id="projects" class="container mx-auto px-4 py-14">
-    <h2 class="text-2xl font-bold text-center mb-8">Projects</h2>
+    <h2 class="text-2xl font-bold text-center mb-8 reveal">Projects</h2>
     <div id="projectsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     <p id="projectsError" class="text-center text-sm text-red-500 mt-4 hidden">Couldn’t load projects.json. Showing nothing or fallback.</p>
   </section>
@@ -122,14 +175,14 @@
   <!-- Experience -->
   <section id="experience" class="bg-gray-100 dark:bg-gray-950">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl font-bold text-center mb-8">Experience</h2>
+      <h2 class="text-2xl font-bold text-center mb-8 reveal">Experience</h2>
       <div id="experienceList" class="grid gap-6"></div>
     </div>
   </section>
 
   <!-- Contact -->
   <section id="contact" class="container mx-auto px-4 py-14">
-    <div class="card p-6 bg-white dark:bg-gray-800 text-center">
+    <div class="card p-6 bg-white dark:bg-gray-800 text-center reveal">
       <h2 class="text-2xl font-bold mb-3">Get in Touch</h2>
       <p class="text-gray-700 dark:text-gray-200">I’m open to internships, co-ops, and project collaborations.</p>
       <div class="mt-4 space-y-1">
@@ -147,7 +200,7 @@
     </div>
   </footer>
 
-  <!-- Dynamic content + Dark mode logic -->
+  <!-- Dynamic content + Dark mode + Reveal logic -->
   <script>
     // Mobile menu
     document.getElementById('mobileToggle').addEventListener('click', () => {
@@ -155,16 +208,18 @@
     });
 
     // Dark mode toggle
-    document.getElementById('themeToggle').addEventListener('click', () => {
+    const themeBtn = document.getElementById('themeToggle');
+    function setThemeIcon() {
+      themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    }
+    themeBtn.addEventListener('click', () => {
       const html = document.documentElement;
       const nowDark = !html.classList.contains('dark');
       html.classList.toggle('dark', nowDark);
       localStorage.setItem('theme', nowDark ? 'dark' : 'light');
-      document.getElementById('themeToggle').textContent = nowDark ? '☀️' : '🌙';
+      setThemeIcon();
     });
-    // Set correct icon at load
-    document.getElementById('themeToggle').textContent =
-      document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    setThemeIcon();
 
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -211,7 +266,7 @@
     const skillsGrid = document.getElementById('skillsGrid');
     skills.forEach(group => {
       skillsGrid.insertAdjacentHTML("beforeend", `
-        <div class="card p-6 bg-white dark:bg-gray-800">
+        <div class="card p-6 bg-white dark:bg-gray-800 reveal">
           <h3 class="font-bold mb-2">${group.title}</h3>
           <div>${group.items.map(s => `<span class="pill">${s}</span>`).join("")}</div>
         </div>
@@ -221,7 +276,7 @@
     const experienceList = document.getElementById('experienceList');
     experience.forEach(e => {
       experienceList.insertAdjacentHTML("beforeend", `
-        <div class="card p-6 bg-white dark:bg-gray-800">
+        <div class="card p-6 bg-white dark:bg-gray-800 reveal">
           <h3 class="font-bold">${e.role}</h3>
           <p class="text-gray-600 dark:text-gray-300">${e.org} | ${e.period}</p>
           <ul class="list-disc list-inside mt-2 text-gray-700 dark:text-gray-200">
@@ -241,7 +296,7 @@
         const grid = document.getElementById('projectsGrid');
         projects.forEach(p => {
           grid.insertAdjacentHTML('beforeend', `
-            <article class="card p-6 bg-white dark:bg-gray-800 flex flex-col">
+            <article class="card p-6 bg-white dark:bg-gray-800 flex flex-col reveal-pop">
               <h3 class="font-bold text-lg">${p.name}</h3>
               <p class="text-gray-700 dark:text-gray-200 mt-2">${p.desc}</p>
               <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">${p.tech}</p>
@@ -257,6 +312,21 @@
       }
     }
     loadProjects();
+
+    // ---- Reveal on scroll (IntersectionObserver) ----
+    (function initReveals() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const els = document.querySelectorAll('.reveal, .reveal-x, .reveal-pop');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target); // animate once
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(el => obs.observe(el));
+    })();
   </script>
 </body>
 </html>
