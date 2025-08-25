@@ -1,30 +1,16 @@
 [
   {
-    "name": "BRFSS Health Insights (Tableau)",
-    "desc": "Geospatial health patterns, household size analysis, and BMI distribution with interactive filters.",
-    "tech": "Tableau, Public Health Data",
-    "linkText": "View Story / PDF",
-    "link": "https://your-link-here"
+    "title": "Google Data Analytics Professional Certificate",
+    "issuer": "Coursera",
+    "date": "2024-06",
+    "id": "ABC-123-XYZ",
+    "link": "https://coursera.org/verify/XYZ"
   },
   {
-    "name": "Gym Training Model (ML)",
-    "desc": "Personalized training recommendations from user inputs and constraints.",
-    "tech": "Python, pandas, scikit-learn",
-    "linkText": "GitHub",
-    "link": "https://your-link-here"
-  },
-  {
-    "name": "Affiliate Marketing Platform",
-    "desc": "Web app to manage and track affiliate campaigns with dashboards and SEO.",
-    "tech": "PHP, MySQL, HTML/CSS/JS",
-    "linkText": "Repo / Demo",
-    "link": "https://your-link-here"
-  },
-  {
-    "name": "Nursery E-commerce",
-    "desc": "SEO-optimized storefront with catalog, cart, and checkout.",
-    "tech": "HTML, CSS, JS, PHP, MySQL",
-    "linkText": "Live / Repo",
-    "link": "https://your-link-here"
+    "title": "Tableau Desktop Specialist",
+    "issuer": "Tableau",
+    "date": "2023-11",
+    "id": "TD-456789",
+    "link": "https://www.credly.com/badges/..."
   }
 ]
