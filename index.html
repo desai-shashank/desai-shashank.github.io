@@ -1,84 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Meta -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shashank Desai — Data & Software</title>
-  <meta name="description" content="Shashank Desai — Selected work, writing, speaking, and timeline. Data analytics, ML, and full-stack web." />
+  <title>Shashank Desai — Portfolio</title>
+  <meta name="description" content="Interactive portfolio of Shashank Desai — data analytics, ML, and full-stack web." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%220.9em%22 font-size=%2290%22>⚡</text></svg>">
 
-  <!-- Minimal, self-contained styles (Sunny-inspired, original code) -->
   <style>
+    /* ---------- THEME ---------- */
     :root{
-      --bg:#ffffff; --text:#0c0c0f; --muted:#6b7280; --line:#e7e7ec; --card:#ffffff;
-      --ink:#111827; --link:#111827; --link-underline:rgba(0,0,0,.35);
+      /* light */
+      --bg:#ffffff; --text:#0e1016; --muted:#6b7280; --line:#e7e7ec; --card:#ffffff;
+      --accent:#7c3aed; --accent-2:#22d3ee;
+      --shadow:0 16px 36px rgba(0,0,0,.10);
     }
-    .dark{
-      --bg:#0b0b0d; --text:#f3f4f6; --muted:#9ca3af; --line:#1f2430; --card:#0f1115;
-      --ink:#e5e7eb; --link:#e5e7eb; --link-underline:rgba(255,255,255,.35);
+    html.dark{
+      /* dark */
+      --bg:#0b0b10; --text:#eaeaf0; --muted:#a6adbb; --line:#1f2330; --card:#0f1117;
+      --accent:#7c3aed; --accent-2:#22d3ee;
+      --shadow:0 16px 36px rgba(0,0,0,.35);
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);
-      font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial}
-    .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
 
-    /* Header / Nav */
-    header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%, transparent);
-      -webkit-backdrop-filter:saturate(160%) blur(8px); backdrop-filter:saturate(160%) blur(8px);
-      border-bottom:1px solid var(--line)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:16px/1.7 Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial;
+      transition: background-color .35s ease, color .35s ease;
+    }
+
+    /* Layout */
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{
+      position:sticky; top:0; z-index:60;
+      background:color-mix(in srgb,var(--bg) 86%, transparent);
+      -webkit-backdrop-filter:saturate(160%) blur(10px); backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid var(--line);
+      transition: background-color .35s ease, border-color .35s ease;
+    }
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{font-weight:700}
-    .nav a{color:var(--text);text-decoration:none;font-size:14px}
-    .nav .links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-    .link{color:var(--link);text-decoration:none;border-bottom:1px dashed var(--link-underline)}
-    .link:hover{opacity:.8}
-    .btn{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid var(--line);
-      text-decoration:none;color:var(--ink);background:transparent}
-    .btn:hover{background:color-mix(in srgb,var(--line) 60%, transparent)}
-    #themeBtn{border:none;background:transparent;font-size:18px;padding:6px 8px;border-radius:10px}
-    #themeBtn:hover{background:color-mix(in srgb,var(--line) 60%, transparent)}
+    .brand{font-weight:800;letter-spacing:.2px}
+    .nav a{color:var(--text);text-decoration:none;opacity:.9}
+    .nav a:hover{opacity:1}
+    .links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .progress{position:absolute;left:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0}
 
-    /* Hero */
-    .hero{padding:48px 0 18px}
-    .hero-grid{display:grid;gap:18px;grid-template-columns:170px 1fr;align-items:center}
-    @media (max-width:720px){.hero-grid{grid-template-columns:1fr}}
-    .pfp{width:160px;height:160px;border-radius:18px;object-fit:cover;border:1px solid var(--line);
-      box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    h1{font-size:32px;line-height:1.25;margin:0 0 6px;font-weight:800;letter-spacing:-.015em}
-    .muted{color:var(--muted)}
+    /* Buttons & chips */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;
+      border:1px solid var(--line); color:var(--text); text-decoration:none; transition:transform .2s,border-color .35s ease, background-color .35s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:white}
+    .btn.ghost{background:color-mix(in srgb,var(--bg) 85%, black 15%)}
+    .chip{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;margin:4px 6px 0 0;color:var(--text);font-size:13px;cursor:pointer;user-select:none;transition:background-color .35s ease, border-color .35s ease}
+    .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .chipbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
     /* Sections */
-    .section{padding:28px 0}
-    .section h2{font-size:18px;margin:0}
-    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .section{padding:34px 0}
+    .hero{padding:52px 0 24px}
+    .grid{display:grid;gap:18px}
+    .hero-grid{grid-template-columns:190px 1fr;align-items:center}
+    @media (max-width:820px){.hero-grid{grid-template-columns:1fr}}
+    .pfp{
+      width:190px;height:190px;border-radius:22px;object-fit:cover;
+      border:1px solid var(--line); box-shadow:var(--shadow);
+      transition: border-color .35s ease, box-shadow .35s ease;
+    }
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.18;font-weight:900;letter-spacing:-.02em}
+    h2{margin:0 0 8px;font-size:20px;font-weight:800}
+    .muted{color:var(--muted)}
+    .lead{color:color-mix(in srgb,var(--text) 85%, var(--muted) 15%)}
 
-    /* Cards / Lists */
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
-    .grid{display:grid;gap:12px}
-    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
-    .item{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);
-      border-radius:14px;padding:14px;background:var(--card)}
-    .item:hover{box-shadow:0 6px 18px rgba(0,0,0,.06)}
-    .item h3{margin:0 0 6px;font-size:16px}
-    .meta{font-size:13px;color:var(--muted);margin-bottom:6px}
+    /* Cards */
+    .cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{
+      position:relative;background:linear-gradient(180deg,var(--card), color-mix(in srgb,var(--card) 85%, black 15%));
+      border:1px solid var(--line); border-radius:18px; padding:16px;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .35s ease, background-color .35s ease;
+      text-decoration:none; color:inherit; overflow:hidden; transform-style:preserve-3d;
+    }
+    .card:hover{box-shadow:var(--shadow); transform:translateY(-2px)}
+    .meta{font-size:13px;color:var(--muted);margin:4px 0 8px}
+    .card::after{
+      content:""; position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+      background:conic-gradient(from 180deg at 50% 50%, color-mix(in srgb,var(--accent) 42%, transparent), transparent 30%,
+                  color-mix(in srgb,var(--accent-2) 46%, transparent), transparent 70%);
+      filter:blur(24px) opacity(.25); z-index:0; transition:opacity .35s ease;
+    }
+    .card > *{position:relative; z-index:1}
 
     /* Timeline */
     .timeline{display:grid;gap:10px}
-    .trow{display:grid;grid-template-columns:100px 1fr;gap:14px}
+    .trow{display:grid;grid-template-columns:120px 1fr;gap:14px}
     @media (max-width:560px){.trow{grid-template-columns:1fr}}
-    .when{font-size:13px;color:var(--muted)}
+    .when{color:var(--muted);font-size:13px}
     .what{font-weight:600}
 
     /* Reveal on scroll */
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease;will-change:opacity,transform}
-    .reveal.show{opacity:1;transform:none}
-    @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+    .reveal{opacity:0;transform:translateY(14px) scale(.98);
+      transition:opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1)}
+    .show{opacity:1;transform:none}
+    @media (prefers-reduced-motion:reduce){
+      .reveal{opacity:1!important;transform:none!important;transition:none!important}
+    }
+
+    /* Utilities */
+    a:focus-visible, button:focus-visible{outline:none; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
+    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}
+    .search{flex:1;min-width:220px}
+    .search input{
+      width:100%; background:color-mix(in srgb,var(--bg) 82%, black 18%); color:var(--text);
+      border:1px solid var(--line); padding:10px 12px; border-radius:12px; transition: background-color .35s ease, border-color .35s ease, color .35s ease;
+    }
+    .toast{
+      position:fixed; left:50%; transform:translateX(-50%); bottom:24px; padding:10px 14px; border-radius:10px;
+      background:color-mix(in srgb,var(--bg) 85%, black 15%); border:1px solid var(--line); color:var(--text); opacity:0; pointer-events:none;
+      transition:opacity .25s ease; z-index:80
+    }
+    .toast.show{opacity:1}
+    .topbtn{
+      position:fixed; right:18px; bottom:24px; z-index:70; opacity:0; transform:translateY(12px);
+      transition:opacity .2s, transform .2s
+    }
+    .topbtn.visible{opacity:1; transform:none}
   </style>
 
-  <!-- Theme bootstrap -->
+  <!-- Initial theme: use saved or prefers-color-scheme -->
   <script>
     (function(){
       const saved = localStorage.getItem('theme');
@@ -88,163 +136,380 @@
   </script>
 </head>
 <body>
-  <!-- Header -->
+  <!-- NAV -->
   <header>
     <div class="wrap nav">
       <span class="brand">Shashank Desai</span>
       <div class="links">
         <a href="#work">Work</a>
-        <a href="#writing">Writing</a>
-        <a href="#speaking">Speaking</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#certs">Certificates</a>
         <a href="#projects">Projects</a>
-        <a href="#timeline">Timeline</a>
         <a href="#contact">Contact</a>
-        <a class="btn" href="Shashank%20Resume%20CA.pdf" target="_blank" rel="noopener">Resume</a>
-        <button id="themeBtn" aria-label="Toggle theme">🌙</button>
+        <a class="btn" href="Shashank%20Resume%20CA.pdf" target="_blank" rel="noopener">📄 Resume</a>
+        <button id="themeToggle" class="btn" title="Toggle dark/light">🌙</button>
       </div>
     </div>
+    <div id="progress" class="progress"></div>
   </header>
 
   <main class="wrap">
-    <!-- Hero -->
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-grid">
-        <img src="IMG_9317x.jpg" alt="Shashank profile" class="pfp reveal" />
+      <div class="grid hero-grid">
+        <img src="IMG_9317x.jpg" alt="Portrait of Shashank Desai" class="pfp reveal" />
         <div class="reveal">
-          <h1>I build data-driven products and crisp dashboards.</h1>
-          <p class="muted">Master of Data Analytics @ UNFC. I work across Python, SQL, Tableau/Power BI, and full-stack web. I like shipping simple, reliable tools that make decisions easier.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-            <a href="#work" class="btn">See featured work</a>
-            <a href="mailto:desaishashank7@gmail.com" class="btn">Email</a>
-            <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" class="btn" rel="noopener">LinkedIn</a>
-            <a href="https://github.com/desai-shashank" target="_blank" class="btn" rel="noopener">GitHub</a>
+          <h1>I design data-driven products and crisp dashboards.</h1>
+          <p class="lead">Master of Data Analytics @ UNFC. Comfortable across Python, SQL, Tableau/Power BI & full-stack web. I like shipping simple, reliable tools that make decisions easier.</p>
+          <div class="links" style="margin-top:12px">
+            <a class="btn primary" href="#work">See featured work</a>
+            <a class="btn ghost" href="mailto:desaishashank7@gmail.com" id="copyEmail">✉️ Copy email</a>
+            <a class="btn ghost" href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" rel="noopener">🔗 LinkedIn</a>
+            <a class="btn ghost" href="https://github.com/desai-shashank" target="_blank" rel="noopener">🐙 GitHub</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Featured Work -->
+    <!-- FEATURED WORK -->
     <section id="work" class="section">
-      <div class="section-head">
-        <h2>Featured work</h2>
-        <a href="#projects" class="link">All projects</a>
-      </div>
-      <div id="featuredGrid" class="grid cols-2">
-        <!-- Real links wired -->
-        <a href="https://desai-shashank.github.io/" target="_blank" rel="noopener" class="item reveal">
-          <h3>Portfolio Website (Live)</h3>
-          <div class="meta">HTML • CSS • JS</div>
-          <div>Minimal, fast, Sunny-style portfolio built with accessible markup and subtle animations.</div>
-        </a>
-        <a href="https://github.com/desai-shashank/desai-shashank.github.io" target="_blank" rel="noopener" class="item reveal">
-          <h3>Portfolio Website (Source Code)</h3>
-          <div class="meta">GitHub Repository</div>
-          <div>Clean, self-contained codebase for this site, easy to extend with projects and posts.</div>
-        </a>
+      <h2>Featured work</h2>
+      <p class="muted">A few projects that show how I work end-to-end.</p>
+      <div class="cards" id="featuredGrid"></div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+      <div class="card reveal">
+        <span class="chip">Python (pandas, NumPy)</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Tableau</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">Java</span>
+        <span class="chip">C++</span>
+        <span class="chip">C#/.NET</span>
+        <span class="chip">HTML/CSS/JS</span>
+        <span class="chip">MySQL</span>
+        <span class="chip">Kali (security basics)</span>
+        <span class="chip">Git/GitHub</span>
       </div>
     </section>
 
-    <!-- Writing -->
-    <section id="writing" class="section">
-      <div class="section-head">
-        <h2>Writing</h2>
-        <a href="#notes" class="link">All notes</a>
-      </div>
-      <div id="writingList" class="grid">
-        <!-- Add your posts when ready -->
-        <a href="https://github.com/desai-shashank/desai-shashank.github.io#readme" target="_blank" rel="noopener" class="item reveal">
-          <div style="display:flex;justify-content:space-between;gap:10px">
-            <strong>How this portfolio is structured</strong><small class="meta">README</small>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- Speaking -->
-    <section id="speaking" class="section">
-      <h2>Speaking</h2>
-      <div id="talksList" class="grid" style="margin-top:12px">
-        <div class="item reveal">
-          <div style="display:flex;justify-content:space-between;gap:10px">
-            <strong>Coming soon</strong><small class="meta">Talks & slides</small>
-          </div>
-          <div>Add a link to slides or a meetup page when you have one.</div>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+      <div class="cards">
+        <div class="card reveal">
+          <h3>Intern — Software Development</h3>
+          <div class="meta">InfoServOps • Vadodara, Gujarat • Dec 2023 – Jul 2024</div>
+          <ul style="margin:6px 0 0 18px">
+            <li>Delivered features across front-end and back-end with a focus on clean UX.</li>
+            <li>Improved UI and performance, keeping pages fast and accessible.</li>
+            <li>Implemented SEO tweaks that increased organic visibility.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- All Projects -->
-    <section id="projects" class="section">
-      <h2>All projects</h2>
-      <div id="projectsGrid" class="grid cols-3" style="margin-top:12px">
-        <!-- Real links wired -->
-        <a href="https://desai-shashank.github.io/" target="_blank" rel="noopener" class="item reveal">
-          <h3>Portfolio Website (Live)</h3>
-          <div class="meta">Frontend • Deployment</div>
-          <div>Deployed via GitHub Pages with a lightweight, original theme.</div>
-        </a>
-        <a href="https://github.com/desai-shashank/desai-shashank.github.io" target="_blank" rel="noopener" class="item reveal">
-          <h3>Portfolio Website (Source)</h3>
-          <div class="meta">Code • README</div>
-          <div>Open-source code for this site — clean structure & easy customization.</div>
-        </a>
-        <!-- Placeholders you can replace later -->
-        <a href="#" class="item reveal">
-          <h3>Interactive Health Insights</h3>
-          <div class="meta">Tableau • Public Data</div>
-          <div>Replace # with your Tableau Public URL when ready.</div>
-        </a>
-      </div>
-    </section>
-
-    <!-- Timeline -->
-    <section id="timeline" class="section">
-      <h2>Timeline</h2>
-      <div id="timelineList" class="timeline" style="margin-top:12px">
+    <!-- EDUCATION -->
+    <section id="education" class="section">
+      <h2>Education</h2>
+      <div class="timeline">
         <div class="trow reveal"><div class="when">2025–2026</div><div class="what">Master of Data Analytics — University of Niagara Falls (expected)</div></div>
-        <div class="trow reveal"><div class="when">2023–2024</div><div class="what">Intern, Software Development — InfoServOps (Vadodara)</div></div>
-        <div class="trow reveal"><div class="when">2021–2024</div><div class="what">B.Tech CSE — Parul University</div></div>
+        <div class="trow reveal"><div class="when">2021–2024</div><div class="what">B.Tech Computer Science & Engineering — Parul University</div></div>
         <div class="trow reveal"><div class="when">2018–2021</div><div class="what">Diploma in Computer Engineering — Parul University</div></div>
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- CERTIFICATES (dynamic) -->
+    <section id="certs" class="section">
+      <h2>Certificates</h2>
+      <div class="toolbar">
+        <div class="chipbar" id="certFilters">
+          <span class="chip active" data-issuer="all">All</span>
+          <span class="chip" data-issuer="Coursera">Coursera</span>
+          <span class="chip" data-issuer="Udemy">Udemy</span>
+          <span class="chip" data-issuer="Google">Google</span>
+          <span class="chip" data-issuer="Other">Other</span>
+        </div>
+        <div class="search">
+          <input id="certSearch" placeholder="Search certificates… (press / to focus)" />
+        </div>
+      </div>
+      <div class="cards" id="certsGrid">
+        <!-- Fallback examples (replaced by JSON if available) -->
+        <div class="card reveal" data-title="(Add your certificate JSON)" data-issuer="Other" data-desc="Create certificates.json to load your real certificates.">
+          <h3>Loading certificates.json…</h3>
+          <div class="meta">Tip: see instructions below</div>
+          <p>If there is no JSON file yet, this fallback shows. Add your real certificates to certificates.json to make this dynamic.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS (filters + search) -->
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <div class="toolbar">
+        <div class="chipbar" id="filters">
+          <span class="chip active" data-tag="all">All</span>
+          <span class="chip" data-tag="data">Data</span>
+          <span class="chip" data-tag="ml">ML</span>
+          <span class="chip" data-tag="web">Web</span>
+        </div>
+        <div class="search">
+          <input id="projectSearch" placeholder="Search projects…  (press / to focus)" />
+        </div>
+      </div>
+      <div class="cards" id="projectsGrid"></div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact" class="section">
+      <h2>Contact</h2>
       <div class="card reveal">
-        <h2 style="margin:0 0 6px">Contact</h2>
-        <p class="muted" style="margin:0 0 8px">Open to internships, co-ops, and collaborations.</p>
-        <p>Email: <a class="link" href="mailto:desaishashank7@gmail.com">desaishashank7@gmail.com</a></p>
-        <p>LinkedIn: <a class="link" target="_blank" rel="noopener" href="https://linkedin.com/in/shashank-kardambhai-desai">linkedin.com/in/shashank-kardambhai-desai</a></p>
-        <p>Resume: <a class="link" href="Shashank%20Resume%20CA.pdf" target="_blank" rel="noopener">Shashank Resume (PDF)</a></p>
+        <p class="muted">I’m open to internships, co-ops, and collaborations.</p>
+        <p>✉️ <a href="mailto:desaishashank7@gmail.com" style="color:inherit">desaishashank7@gmail.com</a></p>
+        <p>🔗 <a href="https://linkedin.com/in/shashank-kardambhai-desai" target="_blank" rel="noopener" style="color:inherit">linkedin.com/in/shashank-kardambhai-desai</a></p>
+        <p>📄 <a href="Shashank%20Resume%20CA.pdf" target="_blank" rel="noopener" style="color:inherit">Resume (PDF)</a></p>
       </div>
     </section>
   </main>
 
-  <footer style="border-top:1px solid var(--line)">
-    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;color:var(--muted);font-size:14px">
-      <span>© <span id="year"></span> Shashank Desai</span>
-      <span>Built for GitHub Pages</span>
-    </div>
+  <footer class="wrap" style="padding:18px 0;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-top:26px">
+    <span>© <span id="year"></span> Shashank Desai</span>
+    <span>Built for GitHub Pages</span>
   </footer>
 
-  <!-- Simple reveal & theme toggle -->
+  <!-- Back-to-top -->
+  <a href="#top" id="topBtn" class="btn topbtn">↑ Top</a>
+
+  <!-- Modal -->
+  <dialog id="modal" style="border:none;border-radius:16px;padding:0;max-width:720px;width:calc(100% - 28px);background:var(--card);color:var(--text);box-shadow:var(--shadow);transition:background-color .35s ease, color .35s ease, border-color .35s ease">
+    <div style="padding:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+      <strong id="mTitle"></strong>
+      <button id="mClose" class="btn" style="padding:6px 10px">✕</button>
+    </div>
+    <div style="padding:18px" id="mBody"></div>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Copied!</div>
+
   <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    /* ====================== DATA ====================== */
+    // Featured: using your live site + repo (real links)
+    const featured = [
+      {
+        title:"Portfolio Website (Live)",
+        meta:"HTML • CSS • JS",
+        blurb:"Minimal, fast, Sunny-style portfolio built with accessible markup and subtle animations.",
+        link:"https://desai-shashank.github.io/",
+        tag:"web",
+        detail:`<p>Deployed via GitHub Pages with a lightweight, original theme. Fully responsive, with dark mode and reveal animations.</p>
+                <p><a href="https://desai-shashank.github.io/" target="_blank" rel="noopener" class="btn">Open website</a></p>`
+      },
+      {
+        title:"Portfolio Website (Source Code)",
+        meta:"GitHub Repository",
+        blurb:"Clean, self-contained codebase for this site, easy to extend with projects and posts.",
+        link:"https://github.com/desai-shashank/desai-shashank.github.io",
+        tag:"web",
+        detail:`<p>Simple structure and no external dependencies. Ideal for quick edits in GitHub UI.</p>
+                <p><a href="https://github.com/desai-shashank/desai-shashank.github.io" target="_blank" rel="noopener" class="btn">Open repository</a></p>`
+      }
+    ];
 
-    // Reveal on scroll
-    const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} }); }, {threshold:0.18});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    const projects = [
+      ...featured,
+      {
+        title:"Interactive Health Insights",
+        meta:"Tableau • Public Data",
+        blurb:"Replace # with your Tableau Public URL when ready (filled & symbol maps, histograms, box plots).",
+        link:"#",
+        tag:"data",
+        detail:`<p>Showcase your BRFSS/health work with tooltips, bins, and filters.</p>`
+      },
+      {
+        title:"Gym Training Recommender",
+        meta:"Python • scikit-learn",
+        blurb:"Small ML pipeline that suggests training plans from goals & constraints.",
+        link:"#",
+        tag:"ml",
+        detail:`<p>Feature engineering + cross-validation; simple UI for inputs and plan export.</p>`
+      }
+    ];
 
-    // Theme toggle
-    const themeBtn = document.getElementById('themeBtn');
-    function setIcon(){ themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
+    /* Certificates are loaded from certificates.json (dynamic).
+       Expected shape: [{ "title": "...", "issuer": "Coursera", "date": "2024-10", "id": "ABC123", "link": "https://..." }, ...]
+       If the file doesn't exist, a fallback card remains visible. */
+
+    /* ====================== THEME ====================== */
+    const themeBtn = document.getElementById('themeToggle');
+    function setThemeIcon(){
+      themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    }
     themeBtn.addEventListener('click', ()=>{
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      setIcon();
+      setThemeIcon();
     });
-    setIcon();
+    // respect saved preference on initial paint (done in head); set correct icon:
+    setThemeIcon();
+
+    // keyboard: T toggles theme, "/" focuses search
+    window.addEventListener('keydown', e=>{
+      if (e.key.toLowerCase() === 't') themeBtn.click();
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT'){
+        e.preventDefault();
+        const searchEl = document.querySelector('#projectSearch') || document.querySelector('#certSearch');
+        searchEl?.focus();
+      }
+    });
+
+    /* ====================== SCROLL Goodies ====================== */
+    const progress = document.getElementById('progress');
+    const topBtn = document.getElementById('topBtn');
+    function onScroll(){
+      const h = document.documentElement;
+      const sc = (h.scrollTop)/(h.scrollHeight - h.clientHeight);
+      progress.style.width = (sc*100) + '%';
+      if (h.scrollTop > 600) topBtn.classList.add('visible'); else topBtn.classList.remove('visible');
+    }
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} }); }, { threshold:.18 });
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Card tilt
+    function addTilt(el){
+      el.addEventListener('mousemove', (e)=>{
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width - .5;
+        const y = (e.clientY - r.top)/r.height - .5;
+        el.style.transform = `rotateX(${ -y * 6 }deg) rotateY(${ x * 6 }deg) translateY(-2px)`;
+      });
+      el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
+      el.addEventListener('blur', ()=>{ el.style.transform=''; });
+    }
+
+    // Toast + copy email
+    const toast = document.getElementById('toast');
+    function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1400); }
+    document.getElementById('copyEmail').addEventListener('click', (e)=>{ e.preventDefault(); navigator.clipboard.writeText('desaishashank7@gmail.com').then(()=>showToast('Email copied')); });
+
+    // Modal
+    const modal = document.getElementById('modal'), mTitle = document.getElementById('mTitle'), mBody = document.getElementById('mBody');
+    document.getElementById('mClose').onclick = ()=>modal.close();
+    function openModal(item){ mTitle.textContent = item.title; mBody.innerHTML = `<div class="meta">${item.meta||item.issuer||''}</div><div>${item.detail||item.blurb||''}</div>`; modal.showModal(); }
+
+    // Helpers
+    function cardHTML(item){
+      return `
+        <article class="card reveal" tabindex="0" data-title="${item.title}" data-meta="${item.meta||item.issuer||''}" data-tag="${item.tag||'data'}" data-issuer="${item.issuer||''}" data-desc="${item.blurb||''}">
+          <h3>${item.title}</h3>
+          <div class="meta">${item.meta||item.issuer||''}</div>
+          <p>${item.blurb||''}</p>
+          <div class="links" style="margin-top:10px">
+            ${item.link ? `<a class="btn" target="_blank" rel="noopener" href="${item.link}">Open</a>`:''}
+            <button class="btn" data-open>Details</button>
+          </div>
+        </article>`;
+    }
+    function wireCards(scope, source){
+      scope.querySelectorAll('.card').forEach(card=>{
+        addTilt(card);
+        card.querySelector('[data-open]')?.addEventListener('click', ()=>{
+          const title = card.dataset.title;
+          const item = source.find(i=>i.title===title) || { title, meta: card.dataset.meta, detail: `<p>${card.dataset.desc||''}</p>` };
+          openModal(item);
+        });
+      });
+    }
+
+    // Featured render
+    const featuredGrid = document.getElementById('featuredGrid');
+    featured.forEach(p=>featuredGrid.insertAdjacentHTML('beforeend', cardHTML(p)));
+    wireCards(featuredGrid, featured);
+
+    // Projects render + filters/search
+    const projectsGrid = document.getElementById('projectsGrid');
+    projects.forEach(p=>projectsGrid.insertAdjacentHTML('beforeend', cardHTML(p)));
+    wireCards(projectsGrid, projects);
+
+    const filterBar = document.getElementById('filters');
+    function applyProjectFilters(){
+      const active = filterBar.querySelector('.active')?.dataset.tag || 'all';
+      const q = document.getElementById('projectSearch').value.trim().toLowerCase();
+      projectsGrid.querySelectorAll('.card').forEach(card=>{
+        const tag = card.dataset.tag;
+        const text = (card.dataset.title + ' ' + card.dataset.meta + ' ' + card.dataset.desc).toLowerCase();
+        const tagPass = active === 'all' || tag === active;
+        const qPass = !q || text.includes(q);
+        card.style.display = (tagPass && qPass) ? '' : 'none';
+      });
+    }
+    filterBar.addEventListener('click', (e)=>{
+      const chip = e.target.closest('.chip'); if(!chip) return;
+      filterBar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active'); applyProjectFilters();
+    });
+    document.getElementById('projectSearch').addEventListener('input', applyProjectFilters);
+    applyProjectFilters();
+
+    // Certificates: fetch JSON, render, then enable filters/search
+    const certsGrid = document.getElementById('certsGrid');
+    const certFilterBar = document.getElementById('certFilters');
+
+    async function loadCertificates(){
+      try{
+        const res = await fetch('certificates.json', { cache:'no-store' });
+        if(!res.ok) throw new Error('No JSON yet');
+        const certs = await res.json();
+        certsGrid.innerHTML = '';
+        certs.forEach(c=>{
+          const item = {
+            title: c.title,
+            meta: c.issuer + (c.date ? ` • ${c.date}` : ''),
+            blurb: c.id ? `Credential ID: ${c.id}` : '',
+            link: c.link || '',
+            issuer: c.issuer || 'Other',
+            tag: 'data' // not used for certs, but harmless
+          };
+          certsGrid.insertAdjacentHTML('beforeend', cardHTML(item));
+        });
+        wireCards(certsGrid, certs.map(c => ({ title: c.title, issuer: c.issuer, detail: `<p>${c.id?`Credential ID: ${c.id}`:''}</p>${c.link?`<p><a class='btn' target='_blank' rel='noopener' href='${c.link}'>Open certificate</a></p>`:''}` })));
+      }catch(e){
+        // leave fallback card in place
+        console.warn('Certificates JSON not found yet. Add certificates.json to enable dynamic loading.');
+      }
+    }
+    loadCertificates();
+
+    function applyCertFilters(){
+      const active = certFilterBar.querySelector('.active')?.dataset.issuer || 'all';
+      const q = document.getElementById('certSearch').value.trim().toLowerCase();
+      certsGrid.querySelectorAll('.card').forEach(card=>{
+        const issuer = (card.dataset.issuer || 'Other');
+        const text = (card.dataset.title + ' ' + issuer + ' ' + (card.dataset.desc||'')).toLowerCase();
+        const issuerPass = active === 'all' || issuer.toLowerCase() === active.toLowerCase();
+        const qPass = !q || text.includes(q);
+        card.style.display = (issuerPass && qPass) ? '' : 'none';
+      });
+    }
+    certFilterBar.addEventListener('click', (e)=>{
+      const chip = e.target.closest('.chip'); if(!chip) return;
+      certFilterBar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active'); applyCertFilters();
+    });
+    document.getElementById('certSearch').addEventListener('input', applyCertFilters);
+    applyCertFilters();
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
