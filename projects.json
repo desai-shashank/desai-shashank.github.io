@@ -1,16 +1,37 @@
 [
   {
-    "title": "Google Data Analytics Professional Certificate",
-    "issuer": "Coursera",
-    "date": "2024-06",
-    "id": "ABC-123-XYZ",
-    "link": "https://coursera.org/verify/XYZ"
+    "title": "Python",
+    "issuer": "Other",
+    "date": "",
+    "id": "",
+    "link": "https://drive.google.com/file/d/1Q0JDu6ffQXvbVt4USvUe5wx55RpqzRb9/view"
   },
   {
-    "title": "Tableau Desktop Specialist",
-    "issuer": "Tableau",
-    "date": "2023-11",
-    "id": "TD-456789",
-    "link": "https://www.credly.com/badges/..."
+    "title": "Machine Learning",
+    "issuer": "Other",
+    "date": "",
+    "id": "",
+    "link": "https://drive.google.com/file/d/1ougNOb755NHU_VYDXcjeMHSEDbDStlAO/view"
+  },
+  {
+    "title": "Mastering Kali Linux",
+    "issuer": "Other",
+    "date": "",
+    "id": "",
+    "link": "https://drive.google.com/file/d/1FhJJc-5Wy9uenKbUYJ1IY_a_3jngTsAz/view"
+  },
+  {
+    "title": "Internet of Things",
+    "issuer": "Other",
+    "date": "",
+    "id": "",
+    "link": "https://drive.google.com/file/d/1Y4Pms-CAgz3ZbaLV8CYysbZmz_RuvyD3/view"
+  },
+  {
+    "title": "Cyber Security and Applied Ethical Hacking",
+    "issuer": "Other",
+    "date": "",
+    "id": "",
+    "link": "https://drive.google.com/file/d/1jUWZiVJUhtsxWZknqepEmr3SNiBIiIKh/view"
   }
 ]
