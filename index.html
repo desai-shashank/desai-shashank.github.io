@@ -10,13 +10,11 @@
   <style>
     /* ---------- THEME ---------- */
     :root{
-      /* light */
       --bg:#ffffff; --text:#0f1218; --muted:#6b7280; --line:#e7e7ec; --card:#ffffff;
       --accent:#7c3aed; --accent-2:#22d3ee;
       --shadow:0 16px 36px rgba(0,0,0,.10);
     }
     html.dark{
-      /* dark */
       --bg:#0b0b10; --text:#eaeaf0; --muted:#a6adbb; --line:#1f2330; --card:#0f1117;
       --accent:#7c3aed; --accent-2:#22d3ee;
       --shadow:0 16px 36px rgba(0,0,0,.35);
@@ -298,61 +296,53 @@
   <!-- Toast -->
   <div id="toast" class="toast">Copied!</div>
 
+  <!-- ===== Inline Certificates JSON (guaranteed rendering) ===== -->
+  <script type="application/json" id="certsData">
+  [
+    {"title":"Python","issuer":"Other","date":"","id":"","link":"https://drive.google.com/file/d/1Q0JDu6ffQXvbVt4USvUe5wx55RpqzRb9/view"},
+    {"title":"Machine Learning","issuer":"Other","date":"","id":"","link":"https://drive.google.com/file/d/1ougNOb755NHU_VYDXcjeMHSEDbDStlAO/view"},
+    {"title":"Mastering Kali Linux","issuer":"Other","date":"","id":"","link":"https://drive.google.com/file/d/1FhJJc-5Wy9uenKbUYJ1IY_a_3jngTsAz/view"},
+    {"title":"Internet of Things","issuer":"Other","date":"","id":"","link":"https://drive.google.com/file/d/1Y4Pms-CAgz3ZbaLV8CYysbZmz_RuvyD3/view"},
+    {"title":"Cyber Security and Applied Ethical Hacking","issuer":"Other","date":"","id":"","link":"https://drive.google.com/file/d/1jUWZiVJUhtsxWZknqepEmr3SNiBIiIKh/view"}
+  ]
+  </script>
+
   <script>
     /* ============ DATA ============ */
     const featured = [
-      {
-        title:"Portfolio Website (Live)",
-        meta:"HTML • CSS • JS",
+      { title:"Portfolio Website (Live)", meta:"HTML • CSS • JS",
         blurb:"Minimal, fast, Sunny-style portfolio built with accessible markup and subtle animations.",
-        link:"https://desai-shashank.github.io/",
-        tag:"web",
+        link:"https://desai-shashank.github.io/", tag:"web",
         detail:`<p>Deployed via GitHub Pages with a lightweight, original theme. Fully responsive, with dark mode and reveal animations.</p>
-                <p><a href="https://desai-shashank.github.io/" target="_blank" rel="noopener" class="btn">Open website</a></p>`
-      },
-      {
-        title:"Portfolio Website (Source Code)",
-        meta:"GitHub Repository",
+                <p><a href="https://desai-shashank.github.io/" target="_blank" rel="noopener" class="btn">Open website</a></p>`},
+      { title:"Portfolio Website (Source Code)", meta:"GitHub Repository",
         blurb:"Clean, self-contained codebase for this site, easy to extend with projects and posts.",
-        link:"https://github.com/desai-shashank/desai-shashank.github.io",
-        tag:"web",
+        link:"https://github.com/desai-shashank/desai-shashank.github.io", tag:"web",
         detail:`<p>Simple structure and no external dependencies. Ideal for quick edits in GitHub UI.</p>
-                <p><a href="https://github.com/desai-shashank/desai-shashank.github.io" target="_blank" rel="noopener" class="btn">Open repository</a></p>`
-      }
+                <p><a href="https://github.com/desai-shashank/desai-shashank.github.io" target="_blank" rel="noopener" class="btn">Open repository</a></p>`}
     ];
 
     const projects = [
       ...featured,
-      {
-        title:"Interactive Health Insights",
-        meta:"Tableau • Public Data",
+      { title:"Interactive Health Insights", meta:"Tableau • Public Data",
         blurb:"Use this slot for your Tableau Public dashboard (filled & symbol maps, histograms, box plots).",
-        link:"#",
-        tag:"data",
-        detail:`<p>Showcase health/BRFSS work with tooltips, bins, and filters.</p>`
-      },
-      {
-        title:"Gym Training Recommender",
-        meta:"Python • scikit-learn",
+        link:"#", tag:"data",
+        detail:`<p>Showcase health/BRFSS work with tooltips, bins, and filters.</p>`},
+      { title:"Gym Training Recommender", meta:"Python • scikit-learn",
         blurb:"Small ML pipeline that suggests training plans from goals & constraints.",
-        link:"#",
-        tag:"ml",
-        detail:`<p>Feature engineering + cross-validation; simple UI for inputs and plan export.</p>`
-      }
+        link:"#", tag:"ml",
+        detail:`<p>Feature engineering + cross-validation; simple UI for inputs and plan export.</p>`}
     ];
 
     /* ============ THEME TOGGLE ============ */
     const themeBtn = document.getElementById('themeToggle');
-    function setThemeIcon(){
-      themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-    }
+    function setThemeIcon(){ themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
     themeBtn.addEventListener('click', ()=>{
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
       setThemeIcon();
     });
     setThemeIcon();
-    // keyboard: T toggles theme, "/" focuses search
     window.addEventListener('keydown', e=>{
       if (e.key.toLowerCase() === 't') themeBtn.click();
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT'){
@@ -452,7 +442,7 @@
     document.getElementById('projectSearch').addEventListener('input', applyProjectFilters);
     applyProjectFilters();
 
-    /* ============ CERTIFICATES (fetch JSON, render, filters/search) ============ */
+    /* ============ CERTIFICATES (inline-first, then external) ============ */
     const certsGrid = document.getElementById('certsGrid');
     const certFilterBar = document.getElementById('certFilters');
 
@@ -462,9 +452,7 @@
         card.querySelector('[data-open]')?.addEventListener('click', ()=>{
           const title = card.dataset.title;
           const item = sourceForModal.find(i=>i.title===title) || {
-            title,
-            issuer: card.dataset.issuer,
-            detail: `<p>${card.dataset.desc||''}</p>`
+            title, issuer: card.dataset.issuer, detail: `<p>${card.dataset.desc||''}</p>`
           };
           openModal(item);
         });
@@ -482,7 +470,6 @@
       }));
       mappedForCards.forEach(item => certsGrid.insertAdjacentHTML('beforeend', cardHTML(item)));
 
-      // for modal details
       const mappedForModal = certs.map(c => ({
         title: c.title,
         issuer: c.issuer || 'Other',
@@ -492,22 +479,24 @@
       }));
       wireCertCards(mappedForModal);
 
-      // reveal new nodes
       certsGrid.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
       applyCertFilters();
     }
 
     async function loadCertificates(){
+      // 1) Try inline JSON first (guaranteed)
+      const inline = document.getElementById('certsData');
+      if (inline && inline.textContent.trim()) {
+        try { renderCerts(JSON.parse(inline.textContent)); return; }
+        catch (e) { console.warn('Inline certs JSON parse error:', e); }
+      }
+      // 2) Fallback: external file
       try {
-        // cache-bust ensures fresh JSON
         const res = await fetch('./certificates.json?cb=' + Date.now(), { cache:'no-store' });
         if (!res.ok) throw new Error('certificates.json not found');
-        const certs = await res.json();
-        renderCerts(certs);
+        renderCerts(await res.json());
       } catch (e) {
-        console.warn('Certificates JSON not loaded:', e);
-        // leave fallback card if fetch fails
+        console.warn('Certificates JSON not loaded:', e); // fallback card stays
       }
     }
 
