@@ -11,7 +11,7 @@
     /* ---------- THEME ---------- */
     :root{
       /* light */
-      --bg:#ffffff; --text:#0e1016; --muted:#6b7280; --line:#e7e7ec; --card:#ffffff;
+      --bg:#ffffff; --text:#0f1218; --muted:#6b7280; --line:#e7e7ec; --card:#ffffff;
       --accent:#7c3aed; --accent-2:#22d3ee;
       --shadow:0 16px 36px rgba(0,0,0,.10);
     }
@@ -126,7 +126,7 @@
     .topbtn.visible{opacity:1; transform:none}
   </style>
 
-  <!-- Initial theme: use saved or prefers-color-scheme -->
+  <!-- Initial theme: saved or prefers-color-scheme -->
   <script>
     (function(){
       const saved = localStorage.getItem('theme');
@@ -224,7 +224,7 @@
       </div>
     </section>
 
-    <!-- CERTIFICATES (dynamic) -->
+    <!-- CERTIFICATES -->
     <section id="certs" class="section">
       <h2>Certificates</h2>
       <div class="toolbar">
@@ -240,16 +240,16 @@
         </div>
       </div>
       <div class="cards" id="certsGrid">
-        <!-- Fallback examples (replaced by JSON if available) -->
-        <div class="card reveal" data-title="(Add your certificate JSON)" data-issuer="Other" data-desc="Create certificates.json to load your real certificates.">
+        <!-- Fallback card shows only if JSON fails -->
+        <div class="card reveal" data-title="Add your certificate JSON" data-issuer="Other" data-desc="Create certificates.json to load your certificates.">
           <h3>Loading certificates.json…</h3>
-          <div class="meta">Tip: see instructions below</div>
-          <p>If there is no JSON file yet, this fallback shows. Add your real certificates to certificates.json to make this dynamic.</p>
+          <div class="meta">Tip: file goes next to index.html</div>
+          <p>Your JSON is already live — this will be replaced automatically.</p>
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS (filters + search) -->
+    <!-- PROJECTS -->
     <section id="projects" class="section">
       <h2>Projects</h2>
       <div class="toolbar">
@@ -299,8 +299,7 @@
   <div id="toast" class="toast">Copied!</div>
 
   <script>
-    /* ====================== DATA ====================== */
-    // Featured: using your live site + repo (real links)
+    /* ============ DATA ============ */
     const featured = [
       {
         title:"Portfolio Website (Live)",
@@ -327,10 +326,10 @@
       {
         title:"Interactive Health Insights",
         meta:"Tableau • Public Data",
-        blurb:"Replace # with your Tableau Public URL when ready (filled & symbol maps, histograms, box plots).",
+        blurb:"Use this slot for your Tableau Public dashboard (filled & symbol maps, histograms, box plots).",
         link:"#",
         tag:"data",
-        detail:`<p>Showcase your BRFSS/health work with tooltips, bins, and filters.</p>`
+        detail:`<p>Showcase health/BRFSS work with tooltips, bins, and filters.</p>`
       },
       {
         title:"Gym Training Recommender",
@@ -342,11 +341,7 @@
       }
     ];
 
-    /* Certificates are loaded from certificates.json (dynamic).
-       Expected shape: [{ "title": "...", "issuer": "Coursera", "date": "2024-10", "id": "ABC123", "link": "https://..." }, ...]
-       If the file doesn't exist, a fallback card remains visible. */
-
-    /* ====================== THEME ====================== */
+    /* ============ THEME TOGGLE ============ */
     const themeBtn = document.getElementById('themeToggle');
     function setThemeIcon(){
       themeBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
@@ -356,20 +351,17 @@
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
       setThemeIcon();
     });
-    // respect saved preference on initial paint (done in head); set correct icon:
     setThemeIcon();
-
     // keyboard: T toggles theme, "/" focuses search
     window.addEventListener('keydown', e=>{
       if (e.key.toLowerCase() === 't') themeBtn.click();
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT'){
         e.preventDefault();
-        const searchEl = document.querySelector('#projectSearch') || document.querySelector('#certSearch');
-        searchEl?.focus();
+        (document.getElementById('projectSearch') || document.getElementById('certSearch'))?.focus();
       }
     });
 
-    /* ====================== SCROLL Goodies ====================== */
+    /* ============ SCROLL GOODIES ============ */
     const progress = document.getElementById('progress');
     const topBtn = document.getElementById('topBtn');
     function onScroll(){
@@ -460,42 +452,72 @@
     document.getElementById('projectSearch').addEventListener('input', applyProjectFilters);
     applyProjectFilters();
 
-    // Certificates: fetch JSON, render, then enable filters/search
+    /* ============ CERTIFICATES (fetch JSON, render, filters/search) ============ */
     const certsGrid = document.getElementById('certsGrid');
     const certFilterBar = document.getElementById('certFilters');
 
-    async function loadCertificates(){
-      try{
-        const res = await fetch('certificates.json', { cache:'no-store' });
-        if(!res.ok) throw new Error('No JSON yet');
-        const certs = await res.json();
-        certsGrid.innerHTML = '';
-        certs.forEach(c=>{
-          const item = {
-            title: c.title,
-            meta: c.issuer + (c.date ? ` • ${c.date}` : ''),
-            blurb: c.id ? `Credential ID: ${c.id}` : '',
-            link: c.link || '',
-            issuer: c.issuer || 'Other',
-            tag: 'data' // not used for certs, but harmless
+    function wireCertCards(sourceForModal){
+      certsGrid.querySelectorAll('.card').forEach(card=>{
+        addTilt(card);
+        card.querySelector('[data-open]')?.addEventListener('click', ()=>{
+          const title = card.dataset.title;
+          const item = sourceForModal.find(i=>i.title===title) || {
+            title,
+            issuer: card.dataset.issuer,
+            detail: `<p>${card.dataset.desc||''}</p>`
           };
-          certsGrid.insertAdjacentHTML('beforeend', cardHTML(item));
+          openModal(item);
         });
-        wireCards(certsGrid, certs.map(c => ({ title: c.title, issuer: c.issuer, detail: `<p>${c.id?`Credential ID: ${c.id}`:''}</p>${c.link?`<p><a class='btn' target='_blank' rel='noopener' href='${c.link}'>Open certificate</a></p>`:''}` })));
-      }catch(e){
-        // leave fallback card in place
-        console.warn('Certificates JSON not found yet. Add certificates.json to enable dynamic loading.');
+      });
+    }
+
+    function renderCerts(certs){
+      certsGrid.innerHTML = '';
+      const mappedForCards = certs.map(c => ({
+        title: c.title,
+        issuer: c.issuer || 'Other',
+        meta: (c.issuer || 'Other') + (c.date ? ` • ${c.date}` : ''),
+        blurb: c.id ? `Credential ID: ${c.id}` : '',
+        link: c.link || ''
+      }));
+      mappedForCards.forEach(item => certsGrid.insertAdjacentHTML('beforeend', cardHTML(item)));
+
+      // for modal details
+      const mappedForModal = certs.map(c => ({
+        title: c.title,
+        issuer: c.issuer || 'Other',
+        detail: `
+          ${c.id ? `<p>Credential ID: ${c.id}</p>` : ''}
+          ${c.link ? `<p><a class='btn' href='${c.link}' target='_blank' rel='noopener'>Open certificate</a></p>` : ''}`
+      }));
+      wireCertCards(mappedForModal);
+
+      // reveal new nodes
+      certsGrid.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+      applyCertFilters();
+    }
+
+    async function loadCertificates(){
+      try {
+        // cache-bust ensures fresh JSON
+        const res = await fetch('./certificates.json?cb=' + Date.now(), { cache:'no-store' });
+        if (!res.ok) throw new Error('certificates.json not found');
+        const certs = await res.json();
+        renderCerts(certs);
+      } catch (e) {
+        console.warn('Certificates JSON not loaded:', e);
+        // leave fallback card if fetch fails
       }
     }
-    loadCertificates();
 
     function applyCertFilters(){
       const active = certFilterBar.querySelector('.active')?.dataset.issuer || 'all';
-      const q = document.getElementById('certSearch').value.trim().toLowerCase();
+      const q = (document.getElementById('certSearch')?.value || '').trim().toLowerCase();
       certsGrid.querySelectorAll('.card').forEach(card=>{
-        const issuer = (card.dataset.issuer || 'Other');
-        const text = (card.dataset.title + ' ' + issuer + ' ' + (card.dataset.desc||'')).toLowerCase();
-        const issuerPass = active === 'all' || issuer.toLowerCase() === active.toLowerCase();
+        const issuer = (card.dataset.issuer || 'Other').toLowerCase();
+        const text = (card.dataset.title + ' ' + card.dataset.meta + ' ' + (card.dataset.desc||'')).toLowerCase();
+        const issuerPass = active === 'all' || issuer === active.toLowerCase();
         const qPass = !q || text.includes(q);
         card.style.display = (issuerPass && qPass) ? '' : 'none';
       });
@@ -505,8 +527,10 @@
       certFilterBar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active'); applyCertFilters();
     });
-    document.getElementById('certSearch').addEventListener('input', applyCertFilters);
-    applyCertFilters();
+    document.getElementById('certSearch')?.addEventListener('input', applyCertFilters);
+
+    // Boot certificates
+    loadCertificates();
 
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
