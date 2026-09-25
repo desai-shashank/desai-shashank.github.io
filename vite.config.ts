@@ -8,7 +8,7 @@ export default defineConfig({
   // e.g. if your repo is github.com/shashank/portfolio, use '/portfolio/'
   // If you're deploying to a <username>.github.io repo (root-level site)
   // or a custom domain, set base to '/' instead.
-  base: '//',
+  base: '/',
   plugins: [
     react(),
     tailwindcss(),
