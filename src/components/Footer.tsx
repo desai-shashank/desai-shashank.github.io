@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
 
       <div className="wrap flex flex-wrap justify-between gap-2 py-6 text-sm text-muted border-t border-[var(--line)]">
         <span>© {new Date().getFullYear()} {siteConfig.name}</span>
-        <span>Designed & built with care — no templates were harmed</span>
+        
       </div>
     </footer>
   );
