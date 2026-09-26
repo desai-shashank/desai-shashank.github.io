@@ -296,11 +296,21 @@ export interface Certification {
 }
 
 export const certificationsData: Certification[] = [
-  { name: "Python Programming" },
-  { name: "Machine Learning" },
-  { name: "Cyber Security and Applied Ethical Hacking" },
-  { name: "Kali Linux" },
-  { name: "Internet of Things (IoT)" },
+  { name: "Python Programming" 
+    url: "https://drive.google.com/file/d/1Q0JDu6ffQXvbVt4USvUe5wx55RpqzRb9/view?usp=drive_link",
+  },
+  { name: "Machine Learning" 
+    url: "https://drive.google.com/file/d/1ougNOb755NHU_VYDXcjeMHSEDbDStlAO/view?usp=drive_link",
+  },
+  { name: "Cyber Security and Applied Ethical Hacking" 
+    url: "https://drive.google.com/file/d/1jUWZiVJUhtsxWZknqepEmr3SNiBIiIKh/view?usp=drive_link",
+  },
+  { name: "Kali Linux" 
+    url: "https://drive.google.com/file/d/1FhJJc-5Wy9uenKbUYJ1IY_a_3jngTsAz/view?usp=drive_link",
+  },
+  { name: "Internet of Things (IoT)" 
+    url: "https://drive.google.com/file/d/1Y4Pms-CAgz3ZbaLV8CYysbZmz_RuvyD3/view?usp=drive_link",
+  },
 ];
 
 export interface Project {
