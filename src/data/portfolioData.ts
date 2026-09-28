@@ -10,8 +10,8 @@ export const siteConfig = {
   phone: "+1 (289) 783-0756",
   resumePath: "/resume.pdf", // Place your resume PDF in /public/resume.pdf
   links: {
-    linkedin: "https://linkedin.com/in/shashankdesai", // Replace with your actual LinkedIn URL
-    github: "https://github.com/shashankdesai",         // Replace with your actual GitHub URL
+    linkedin: "https://www.linkedin.com/in/shashank-k-desai/", // Replace with your actual LinkedIn URL
+    github: "https://github.com/desai-shashank",         // Replace with your actual GitHub URL
     portfolio: "#",                                       // This site
   },
 };
