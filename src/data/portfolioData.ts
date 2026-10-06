@@ -83,42 +83,58 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
   {
+    title: "Data Specialist",
+    company: "Happy Cramps",
+    location: "Brampton, Ontario, Canada",
+    period: "March 2026 – Present",
+    responsibilities: [
+      "Contribute to a market validation and digital optimization project analyzing customer behaviour, sales processes, and customer acquisition opportunities to support business growth.",
+      "Track and report key performance indicators (KPIs) using Google Analytics, translating web and campaign data into data-driven recommendations for marketing and leadership teams.",
+      "Assess digital optimization opportunities by reviewing customer acquisition management, marketing performance, and emerging technology use cases.",
+      "Present findings and recommendations to stakeholders through structured analysis and business-focused presentations.",
+    ],
+    tags: [
+      "Google Analytics",
+      "KPI Tracking",
+      "Market Validation",
+      "Customer Behaviour",
+      "Digital Optimization",
+      "Stakeholder Presentations",
+    ],
+    type: "technical",
+  },
+  {
     title: "Data Analyst Intern",
     company: "Happy Cramps",
     location: "Brampton, Ontario, Canada",
-    period: "January 2026 – Present",
+    period: "January 2026 – March 2026",
     responsibilities: [
-      "Delivered a market validation and digital optimization project analyzing customer behaviour, sales processes, and customer acquisition opportunities to support business growth.",
-      "Tracked and reported key performance indicators (KPIs) using Google Analytics, translating web and campaign data into actionable insights for marketing and leadership teams.",
       "Conducted market and competitor research to evaluate customer acquisition channels, marketing performance, and emerging technology use cases.",
-      "Built structured analyses and presented findings and recommendations to stakeholders through business-focused presentations and reports.",
+      "Supported KPI tracking and Google Analytics reporting, turning web and campaign data into actionable insights.",
       "Collaborated with cross-functional team members to define reporting requirements and standardize how performance data was measured and communicated.",
     ],
     tags: [
       "Google Analytics",
       "KPI Tracking",
       "Market Research",
-      "Customer Behaviour",
-      "Data Analysis",
+      "Competitor Research",
       "Reporting",
-      "Stakeholder Presentations",
+      "Cross-Functional Collaboration",
     ],
     type: "technical",
   },
   {
-    title: "Sales Associate",
-    company: "Winners",
-    location: "Niagara Falls, Canada",
+    title: "Sales Floor Associate",
+    company: "TJX Canada (Winners, Marshalls, HomeSense)",
+    location: "Ontario, Canada",
     period: "August 2025 – Present",
     responsibilities: [
+      "Assist customers on the sales floor in a high-volume retail environment, providing product knowledge and service.",
+      "Support merchandising and store presentation standards while working with team members to meet daily operational goals.",
       "Cross-trained and worked across multiple store functions, including Zone 1, Zone 2, Cashier, Fitting Room, and Backroom/Warehouse.",
-      "Maintained merchandising standards, replenished stock, organized displays, and ensured a clean, organized, customer-ready sales floor.",
-      "Processed customer transactions accurately and efficiently using POS systems.",
-      "Handled cash and card payments and delivered friendly, efficient customer service.",
-      "Assisted customers with sizing and product selection, managed fitting-room traffic, and organized returned merchandise.",
+      "Processed customer transactions accurately and efficiently using POS systems, handling cash and card payments.",
       "Received, sorted, and processed incoming inventory shipments and organized stockroom for efficient retrieval.",
       "Supported loss prevention and safety procedures.",
-      "Built strong time-management, teamwork, and customer service skills through consistent rotation across store departments.",
     ],
     tags: [
       "Adaptability",
@@ -134,35 +150,24 @@ export const experienceData: ExperienceItem[] = [
     title: "Software Developer",
     company: "InfoServOps",
     location: "Vadodara, Gujarat, India",
-    period: "February 2024 – July 2024",
+    period: "February 2022 – July 2024",
     responsibilities: [
       "Developed and maintained in-house web products across front-end and back-end layers, contributing to feature delivery throughout the development lifecycle.",
+      "Designed user interfaces to improve the visual and interactive experience of web applications.",
       "Implemented on-page SEO improvements to increase organic search visibility for company web applications.",
       "Participated in code reviews and team planning sessions, applying feedback to improve code quality and delivery timelines.",
-    ],
-    tags: [
-      "Full-Stack Development",
-      "SEO",
-      "Code Reviews",
-      "Web Applications",
-    ],
-    type: "technical",
-  },
-  {
-    title: "Software Developer Intern",
-    company: "InfoServOps",
-    location: "Vadodara, Gujarat, India",
-    period: "December 2023 – January 2024",
-    responsibilities: [
       "Built responsive user interfaces using HTML, CSS, JavaScript, and PHP, improving usability and consistency across application screens.",
       "Debugged and resolved functional defects to ensure reliable application performance and a seamless end-user experience.",
     ],
     tags: [
+      "Full-Stack Development",
       "HTML",
       "CSS",
       "JavaScript",
       "PHP",
       "UI Development",
+      "SEO",
+      "Code Reviews",
       "Debugging",
     ],
     type: "technical",
@@ -210,7 +215,7 @@ export const skillsData: SkillCategory[] = [
   {
     name: "Software & Web Development",
     icon: "code",
-    skills: [".NET", "Full-Stack Web Development", "REST APIs", "UI/UX Design", "SEO Optimization"],
+    skills: [".NET Framework", "Full-Stack Web Development", "REST APIs", "UI/UX Design", "SEO Optimization"],
   },
   {
     name: "Other Technologies",
@@ -247,7 +252,7 @@ export const educationData: EducationItem[] = [
     degree: "Master of Data Analytics",
     institution: "University of Niagara Falls Canada",
     location: "Niagara Falls, Ontario",
-    period: "2025 – 2026",
+    period: "January 2025 – July 2026",
     gpa: "3.72 / 4.0",
     coursework: [
       "Data Analytics",
@@ -272,7 +277,6 @@ export const educationData: EducationItem[] = [
       "Software Development",
       "Cybersecurity",
       "Cloud Computing",
-      "Web Development",
     ],
     featured: false,
   },
@@ -282,7 +286,11 @@ export const educationData: EducationItem[] = [
     location: "Vadodara, Gujarat, India",
     period: "2018 – 2021",
     gpa: "8.75 / 10",
-    coursework: [],
+    coursework: [
+      "Web Development",
+      "Android Application Development",
+      "Game Development",
+    ],
     featured: false,
   },
 ];
@@ -296,11 +304,11 @@ export interface Certification {
 }
 
 export const certificationsData: Certification[] = [
-  { name: "Python Programming" },
-  { name: "Machine Learning" },
-  { name: "Cyber Security and Applied Ethical Hacking" },
-  { name: "Kali Linux" },
-  { name: "Internet of Things (IoT)" },
+  { name: "Python Programming", url: "https://drive.google.com/file/d/1Q0JDu6ffQXvbVt4USvUe5wx55RpqzRb9/view?usp=drive_link" },
+  { name: "Machine Learning", url: "https://drive.google.com/file/d/1ougNOb755NHU_VYDXcjeMHSEDbDStlAO/view?usp=drive_link" },
+  { name: "Cyber Security and Applied Ethical Hacking", url: "https://drive.google.com/file/d/1jUWZiVJUhtsxWZknqepEmr3SNiBIiIKh/view?usp=drive_link" },
+  { name: "Kali Linux", url: "https://drive.google.com/file/d/1FhJJc-5Wy9uenKbUYJ1IY_a_3jngTsAz/view?usp=drive_link" },
+  { name: "Internet of Things (IoT)", url: "https://drive.google.com/file/d/1Y4Pms-CAgz3ZbaLV8CYysbZmz_RuvyD3/view?usp=drive_link" },
 ];
 
 export interface Project {
