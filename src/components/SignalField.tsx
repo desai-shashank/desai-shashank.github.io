@@ -58,11 +58,15 @@ export const SignalField: React.FC<SignalFieldProps> = ({
     let w = 0, h = 0, dpr = 1;
     let frame = 0;
     let visible = true;
+    // In reduced-motion mode the loop only runs while something is moving.
+    let busy = true;
     const mouse = { x: -9999, y: -9999, active: false };
 
     const build = () => {
-      const rect = canvas.getBoundingClientRect();
-      w = rect.width; h = rect.height;
+      // Layout size, not getBoundingClientRect(): the latter is inflated while
+      // the panel is still rotated by its entrance animation, which skews the
+      // dot grid against the pointer position.
+      w = canvas.clientWidth; h = canvas.clientHeight;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
@@ -111,6 +115,9 @@ export const SignalField: React.FC<SignalFieldProps> = ({
         }
       }
       particles = next;
+      // Reduced motion: skip the intro, start fully assembled.
+      if (reduced) particles.forEach((p) => { p.x = p.tx; p.y = p.ty; });
+      busy = true;
 
       const drifterCount = Math.round((w * h) / 9000);
       drifters = Array.from({ length: drifterCount }, () => ({
@@ -122,8 +129,10 @@ export const SignalField: React.FC<SignalFieldProps> = ({
 
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-    const draw = (now: number) => {
+    /** Draws a frame; returns true while any dot is still moving. */
+    const draw = (now: number): boolean => {
       ctx.clearRect(0, 0, w, h);
+      let moving = false;
 
       // Background noise — the stuff the signal is pulled out of.
       for (const d of drifters) {
@@ -141,13 +150,11 @@ export const SignalField: React.FC<SignalFieldProps> = ({
       const assembling = !reduced && elapsed < ASSEMBLE_MS + 400;
 
       for (const p of particles) {
-        if (reduced) {
-          p.x = p.tx; p.y = p.ty;
-        } else if (began === null) {
+        if (!reduced && began === null) {
           // Waiting for the loader: gentle Brownian jitter.
           p.x = p.sx + Math.sin(now / 900 + p.delay * 20) * 6;
           p.y = p.sy + Math.cos(now / 1100 + p.delay * 30) * 6;
-        } else if (assembling) {
+        } else if (!reduced && assembling) {
           const local = Math.min(1, Math.max(0, (elapsed / ASSEMBLE_MS - p.delay * 0.5) / 0.5));
           const k = ease(local);
           const wobble = (1 - k) * 18;
@@ -172,6 +179,7 @@ export const SignalField: React.FC<SignalFieldProps> = ({
           p.vx = (p.vx + fx) * 0.82;
           p.vy = (p.vy + fy) * 0.82;
           p.x += p.vx; p.y += p.vy;
+          if (Math.abs(p.vx) + Math.abs(p.vy) > 0.02 || Math.hypot(p.x - p.tx, p.y - p.ty) > 0.1) moving = true;
         }
 
         const displaced = Math.min(1, Math.hypot(p.x - p.tx, p.y - p.ty) / 60);
@@ -184,18 +192,24 @@ export const SignalField: React.FC<SignalFieldProps> = ({
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       }
+      return moving;
     };
 
     const loop = (now: number) => {
-      if (visible) draw(now);
+      // Full motion redraws every frame; reduced motion only while the
+      // pointer is near or the dots are still springing back.
+      if (visible && (!reduced || busy || mouse.active)) busy = draw(now);
       frame = requestAnimationFrame(loop);
     };
 
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-      mouse.active = mouse.y > -60 && mouse.y < h + 60;
+      // Map into the canvas's own coordinate space (handles the panel's tilt/scale).
+      const sx = rect.width ? w / rect.width : 1;
+      const sy = rect.height ? h / rect.height : 1;
+      mouse.x = (e.clientX - rect.left) * sx;
+      mouse.y = (e.clientY - rect.top) * sy;
+      mouse.active = mouse.y > -60 && mouse.y < h + 60 && mouse.x > -120 && mouse.x < w + 120;
     };
     const onLeave = () => { mouse.active = false; };
 
@@ -207,7 +221,7 @@ export const SignalField: React.FC<SignalFieldProps> = ({
         // Skip straight to the assembled state after a resize.
         if (startedAt.current !== null) startedAt.current = performance.now() - ASSEMBLE_MS * 2;
         particles.forEach((p) => { p.x = p.tx; p.y = p.ty; });
-        if (reduced) draw(performance.now());
+        busy = true;
       }, 150);
     };
 
@@ -218,8 +232,7 @@ export const SignalField: React.FC<SignalFieldProps> = ({
     document.fonts.ready.then(() => {
       if (cancelled) return;
       build();
-      if (reduced) draw(performance.now());
-      else frame = requestAnimationFrame(loop);
+      frame = requestAnimationFrame(loop);
     });
 
     window.addEventListener('pointermove', onMove, { passive: true });
