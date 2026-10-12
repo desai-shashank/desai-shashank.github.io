@@ -150,7 +150,7 @@ export const Hero: React.FC<{ ready: boolean }> = ({ ready }) => {
             </Magnetic>
             {resumeAvailable && (
               <Magnetic>
-                <a href={siteConfig.resumePath} download className="btn btn-line">
+                <a href={siteConfig.resumePath} download="Shashank-Desai-Resume.pdf" className="btn btn-line">
                   <Icon name="download" size={16} /> Download Résumé
                 </a>
               </Magnetic>
