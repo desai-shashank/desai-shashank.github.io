@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
 import { siteConfig } from '../data/portfolioData';
-import { useActiveSection, useLocalTime } from '../hooks/usePortfolio';
+import { useActiveSection, useLocalTime, useResumeAvailable } from '../hooks/usePortfolio';
 import { lockScroll, scrollToTarget } from '../lib/scroll';
 import { Magnetic } from './Magnetic';
+import { Icon } from './Icon';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -12,6 +13,7 @@ export const Navbar: React.FC<{ items: { label: string; href: string }[]; ready:
   const ids = React.useMemo(() => items.map((i) => i.href.slice(1)), [items]);
   const active = useActiveSection(ids);
   const time = useLocalTime();
+  const resumeAvailable = useResumeAvailable();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
 
@@ -93,6 +95,20 @@ export const Navbar: React.FC<{ items: { label: string; href: string }[]; ready:
               <div className="hidden xl:flex items-center gap-2 text-sm text-muted">
                 <span className="live-dot" /> {time} · Ontario
               </div>
+              {resumeAvailable && (
+                <Magnetic className="hidden lg:inline-block">
+                  <a
+                    href={siteConfig.resumePath}
+                    download="Shashank-Desai-Resume.pdf"
+                    className="btn btn-line !h-11 !px-4 xl:!px-5 !text-[0.88rem]"
+                    aria-label="Download Resume"
+                    title="Download Resume"
+                  >
+                    <Icon name="download" size={16} />
+                    <span className="hidden xl:inline">Resume</span>
+                  </a>
+                </Magnetic>
+              )}
               <Magnetic className="hidden sm:inline-block">
                 <a
                   href="#contact"
@@ -154,6 +170,15 @@ export const Navbar: React.FC<{ items: { label: string; href: string }[]; ready:
                     );
                   })}
                 </ul>
+                {resumeAvailable && (
+                  <a
+                    href={siteConfig.resumePath}
+                    download="Shashank-Desai-Resume.pdf"
+                    className="btn btn-line w-full justify-center mt-3"
+                  >
+                    <Icon name="download" size={16} /> Download Resume
+                  </a>
+                )}
                 <a
                   href={`mailto:${siteConfig.email}`}
                   className="btn btn-accent w-full justify-center mt-3"
