@@ -46,7 +46,7 @@ export const focusData = {
 
 export const aboutData = {
   intro: `I'm a Data Analytics professional and Software Developer with a Master's in Data Analytics and a background in Computer Science and Engineering. I'm passionate about bridging the gap between code and data — building robust software while transforming complex datasets into clear, actionable insights.`,
-  detailParagraph: `With hands-on experience analyzing KPIs, customer behavior, web and campaign performance, and market trends, I bring a unique combination of strong analytical and technical skills. I thrive in cross-functional environments where I can collaborate with stakeholders to deliver data-driven solutions that make a real impact.`,
+  detailParagraph: `Data analyst and former software developer with a Master of Data Analytics and hands-on experience turning raw business data into dashboards, KPI reporting and clear recommendations. Proficient in Python, SQL, Power BI, Tableau and Excel, with working knowledge of machine learning and full-stack development. Strong at turning complex analysis into practical decisions.`,
   cards: [
     {
       title: "Data Analytics",
@@ -83,22 +83,39 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
   {
-    title: "Data Specialist",
-    company: "Happy Cramps",
-    location: "Brampton, Ontario, Canada",
-    period: "March 2026 – Present",
+    title: "Advisor II, Technical Support",
+    company: "Concentrix",
+    location: "Niagara, Ontario, Canada",
+    period: "October 2026 – Present",
     responsibilities: [
-      "Contribute to a market validation and digital optimization project analyzing customer behaviour, sales processes, and customer acquisition opportunities to support business growth.",
-      "Track and report key performance indicators (KPIs) using Google Analytics, translating web and campaign data into data-driven recommendations for marketing and leadership teams.",
-      "Assess digital optimization opportunities by reviewing customer acquisition management, marketing performance, and emerging technology use cases.",
-      "Present findings and recommendations to stakeholders through structured analysis and business-focused presentations.",
+      "Provide technical support to customers, troubleshooting issues and guiding them to resolution.",
     ],
     tags: [
+      "Technical Support",
+      "Troubleshooting",
+      "Customer Support",
+      "Issue Resolution",
+    ],
+    type: "technical",
+  },
+  {
+    title: "Data Specialist (Volunteer)",
+    company: "Happy Cramps",
+    location: "Brampton, Ontario, Canada",
+    period: "March 2026 – October 2026",
+    responsibilities: [
+      "Owned end-to-end analytics for a consumer wellness brand, consolidating sales, marketing and customer data into reliable datasets with SQL, Python and Excel (Power Query), and automated recurring reports and data-quality checks.",
+      "Designed and maintained Power BI and Tableau dashboards tracking revenue, customer acquisition, retention and product KPIs, giving leadership a clear, up-to-date view of business health.",
+      "Analyzed website and campaign performance in Google Analytics and applied statistical analysis and predictive modeling to uncover customer, channel and demand trends, presenting recommendations to founders and cross-functional teams.",
+    ],
+    tags: [
+      "SQL",
+      "Python",
+      "Power BI",
+      "Tableau",
       "Google Analytics",
       "KPI Tracking",
-      "Market Validation",
-      "Customer Behaviour",
-      "Digital Optimization",
+      "Predictive Modeling",
       "Stakeholder Presentations",
     ],
     type: "technical",
